@@ -5,10 +5,6 @@ body {
     color: white;
 }
 
-::placeholder {
-    color: aliceblue;
-}
-
 /*login page*/
 .login-wrapper {
     text-align: center;
@@ -19,7 +15,6 @@ body {
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 40%;
-    background-image: url("images/particle.jpg");
 }
 
 .login-form h1 {
@@ -40,10 +35,6 @@ body {
     margin-bottom: 20px;
 }
 
-.login-button {
-
-}
-
 #loginButton {
     padding: 10px 80px 10px 80px;
     margin-bottom: 20px;
@@ -53,13 +44,41 @@ body {
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
+    width: 35%;
 }
 
 #loginButton:hover {
     background:#fff;
     color:#1AAB8A;
 }
+
+#createButton {
+    padding: 10px 80px 10px 80px;
+    margin-bottom: 20px;
+    background:#1AAB8A;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    width: 35%;
+}
+
+#createButton:hover {
+    background:#fff;
+    color:#1AAB8A;
+}
 /************/
+
+/* Create Account */
+#createAcc {
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 40%;
+    background-image: url("images/particle.jpg");
+}
+/******************/
 
 /*chat screen*/
 .chat-container {

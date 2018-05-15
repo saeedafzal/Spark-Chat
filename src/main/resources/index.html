@@ -16,25 +16,27 @@
             <br>
             <input class="login-input" type="password" placeholder="Password" id="passField" height="40px">
             <br>
-            <button class="login-button" id="loginButton" onclick="login()">Login</button>
+            <button id="loginButton" onclick="login()">Login</button>
             <br>
-            <button class="login-button" onclick="createAccount()">Create Account</button>
+            <button id="createButton" onclick="createAccount()">Create Account</button>
         </div>
     </div>
 </div>
 
 <!-- Create Account -->
-<div id="createAcc">
-    <div class="wrapper">
-        <div class="login-wrap">
-            <div class="login-form">
-                <h1>Create Account</h1>
-                <input class="login-input" type="text" placeholder="Username" id="loginF">
-                <input class="login-input" type="password" placeholder="Password" id="passF">
-                <input class="login-input" type="password" placeholder="Confirm Password" id="confPassF">
-                <button class="login-button" onclick="createAcc()">Create Account</button>
-                <button class="login-button" onclick="backTo()">Back</button>
-            </div>
+<div class="login-wrapper">
+    <div id="createAcc">
+        <div class="login-form">
+            <h1>Create Account</h1>
+            <input class="login-input" type="text" placeholder="Username" id="loginF">
+            <br>
+            <input class="login-input" type="password" placeholder="Password" id="passF">
+            <br>
+            <input class="login-input" type="password" placeholder="Confirm Password" id="confPassF">
+            <br>
+            <button class="login-button" onclick="createAcc()">Create Account</button>
+            <br>
+            <button class="login-button" onclick="backTo()">Back</button>
         </div>
     </div>
 </div>

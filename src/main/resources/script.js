@@ -101,7 +101,7 @@ function createAcc() {
 
 function createAccount() {
     id('login').style.display = 'none';
-    id('createAcc').style.display = 'block';
+    id('createAcc').style.display = 'inline-block';
     document.title = "Create Account";
 }
 
@@ -286,7 +286,7 @@ function ignoreMessage() {
 
 function backTo() {
     id('createAcc').style.display = 'none';
-    id('login').style.display = 'block';
+    id('login').style.display = 'inline-block';
 }
 
 function readMessage() {
