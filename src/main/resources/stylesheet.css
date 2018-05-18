@@ -49,24 +49,25 @@ body {
 #loginButton {
     padding: 0;
     margin-bottom: 20px;
-    background:#1AAB8A;
-    color:#fff;
-    border:none;
-    cursor:pointer;
-    transition:800ms ease all;
-    outline:none;
+    background: #1AAB8A;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
     width: 60%;
     height: 38px;
 }
 
 #loginButton:hover {
-    background:#fff;
-    color:#1AAB8A;
+    background: #fff;
+    color: #1AAB8A;
 }
 
 #createButton {
     margin-bottom: 20px;
 }
+
 /************/
 
 /* Create Account */
@@ -85,6 +86,7 @@ body {
 #confPassF {
     margin-bottom: 20px;
 }
+
 /******************/
 
 /*chat screen*/
@@ -158,24 +160,24 @@ textarea::placeholder {
 }
 
 .chat .chat-history .my-message {
-    color : white;
-    padding : 18px 20px;
-    line-height : 26px;
-    font-size : 16px;
-    border-radius : 7px;
-    margin-bottom : 30px;
-    width : 90%;
+    color: white;
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 7px;
+    margin-bottom: 30px;
+    width: 90%;
     position: relative;
 }
 
 .chat .chat-history .other-message {
-    color : white;
-    padding : 18px 20px;
-    line-height : 26px;
-    font-size : 16px;
-    border-radius : 7px;
-    margin-bottom : 30px;
-    width : 90%;
+    color: white;
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 7px;
+    margin-bottom: 30px;
+    width: 90%;
     position: relative;
 }
 
@@ -202,6 +204,7 @@ textarea::placeholder {
     border-bottom-color: rgb(148, 194, 237);
     margin-left: -10px;
 }
+
 /*************/
 
 /* display of user list in contacts*/

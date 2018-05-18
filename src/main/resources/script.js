@@ -173,11 +173,16 @@ function updateScreen(msg) {
                 alert(data.message);
             } else {
                 if (data.msg.sender === userName) {
+                    /** @namespace data.msg */
                     insert("chat", {sender: "", message: data.msg.message, time: data.time});
                     chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
                 } else {
                     insert("chat", {sender: data.sender, message: data.msg.message, time: data.time});
-                    chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                    chats[userName + recipientName].push({
+                        sender: data.sender,
+                        message: data.msg.message,
+                        time: data.time
+                    });
                 }
             }
         } else {
@@ -329,13 +334,6 @@ function search() {
             li[i].style.display = "none";
         }
     }
-}
-
-function addZero(i) {
-    if (i < 10) {
-        i = "0" + i;
-    }
-    return i;
 }
 
 function scrollToBottom() {

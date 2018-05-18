@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -28,7 +27,6 @@ public class Handler {
     private final Gson gson = new GsonBuilder().create();
     private final Queue<Session> sessions = new ConcurrentLinkedQueue<>(); //for broadcasts
     private Map<Account, Session> onlineUsers = new HashMap<>();
-    private Map<String, List<Message>> chatHistory = new HashMap<>();
 
     @OnWebSocketConnect
     public void onConnect(Session session) {
