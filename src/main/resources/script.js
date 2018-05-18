@@ -11,6 +11,7 @@ id('createAcc').style.display = 'none';
 
 //http requests
 function login() {
+    document.body.style.background = "#C5DDEB";
     if (id('loginField').value === '' || id('passField').value === '') {
         alert("Enter both fields!");
         return;
@@ -108,8 +109,6 @@ function createAccount() {
 //websocket start function
 function startSocket() {
     ws = new WebSocket("ws://localhost:4567/chat");
-
-    timeout();
 
     ws.onmessage = function (msg) {
         updateScreen(msg);
@@ -224,7 +223,11 @@ function insert(targetID, message) {
     div2.style.background = colour;
     div2.style.cssFloat = dirCheck(message.sender);
     div2.style.textAlign = dirCheck(message.sender);
-    div2.setAttribute('class', 'message my-message');
+    if (message.sender === "") {
+        div2.setAttribute('class', 'my-message');
+    } else {
+        div2.setAttribute('class', 'other-message');
+    }
     div2.innerHTML = message.message;
 
     li.appendChild(div);
@@ -329,9 +332,4 @@ function addZero(i) {
         i = "0" + i;
     }
     return i;
-}
-
-function timeout() {
-    ws.send("ping");
-    setTimeout(timeout, 3 * 60 * 1000);
 }

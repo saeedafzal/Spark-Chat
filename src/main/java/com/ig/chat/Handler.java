@@ -35,6 +35,7 @@ public class Handler {
         LOG.info("{} joined Server!", session.getLocalAddress());
         onlineUsers.put(Server.account, session);
         sessions.add(session);
+        session.setIdleTimeout(28800000);
 
         for (Account acc : Server.userList) {
             for (Account a : onlineUsers.keySet()) {

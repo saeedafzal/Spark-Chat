@@ -1,8 +1,12 @@
 body {
-    background: #C5DDEB;
     font: 14px/20px "Lato", Arial, sans-serif;
     padding: 40px 0;
     color: white;
+    background: #C5DDEB url("images/blur-wallpapers-2.jpg");
+}
+
+::placeholder {
+    color: aliceblue;
 }
 
 /*login page*/
@@ -14,7 +18,8 @@ body {
     display: inline-block;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 40%;
+    width: 28%;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .login-form h1 {
@@ -29,14 +34,20 @@ body {
     margin: 8px;
     border: 2px solid white;
     border-radius: 4px;
+    width: 50%;
+    color: white;
 }
 
 #passField {
+    margin-bottom: 15px;
+}
+
+#checkBox {
     margin-bottom: 20px;
 }
 
 #loginButton {
-    padding: 10px 80px 10px 80px;
+    padding: 0;
     margin-bottom: 20px;
     background:#1AAB8A;
     color:#fff;
@@ -44,7 +55,8 @@ body {
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
-    width: 35%;
+    width: 60%;
+    height: 38px;
 }
 
 #loginButton:hover {
@@ -53,20 +65,7 @@ body {
 }
 
 #createButton {
-    padding: 10px 80px 10px 80px;
     margin-bottom: 20px;
-    background:#1AAB8A;
-    color:#fff;
-    border:none;
-    cursor:pointer;
-    transition:800ms ease all;
-    outline:none;
-    width: 35%;
-}
-
-#createButton:hover {
-    background:#fff;
-    color:#1AAB8A;
 }
 /************/
 
@@ -75,8 +74,16 @@ body {
     display: inline-block;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 40%;
-    background-image: url("images/particle.jpg");
+    width: 28%;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.login-button {
+    margin-bottom: 20px;
+}
+
+#confPassF {
+    margin-bottom: 20px;
 }
 /******************/
 
@@ -135,6 +142,10 @@ body {
     resize: none;
 }
 
+textarea::placeholder {
+    color: #434651;
+}
+
 .chat .chat-message button {
     float: right;
     color: #94C2ED;
@@ -146,7 +157,7 @@ body {
     background: #F2F5F8;
 }
 
-.chat .chat-history .message {
+.chat .chat-history .my-message {
     color : white;
     padding : 18px 20px;
     line-height : 26px;
@@ -157,7 +168,18 @@ body {
     position: relative;
 }
 
-.chat .chat-history .message:after {
+.chat .chat-history .other-message {
+    color : white;
+    padding : 18px 20px;
+    line-height : 26px;
+    font-size : 16px;
+    border-radius : 7px;
+    margin-bottom : 30px;
+    width : 90%;
+    position: relative;
+}
+
+.chat .chat-history .my-message:after {
     bottom: 100%;
     content: " ";
     height: 0;
@@ -165,7 +187,19 @@ body {
     position: absolute;
     pointer-events: none;
     border: 10px solid transparent;
-    border-bottom-color: #94c2ed;
+    border-bottom-color: rgb(119, 199, 118);
+    margin-left: -10px;
+}
+
+.chat .chat-history .other-message:after {
+    bottom: 100%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border: 10px solid transparent;
+    border-bottom-color: rgb(148, 194, 237);
     margin-left: -10px;
 }
 /*************/
