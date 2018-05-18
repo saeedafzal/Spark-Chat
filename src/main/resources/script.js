@@ -233,6 +233,8 @@ function insert(targetID, message) {
     li.appendChild(div);
     li.appendChild(div2);
     list.appendChild(li);
+
+    scrollToBottom();
 }
 
 function checkForSender(message) {
@@ -307,6 +309,8 @@ function readMessage() {
     for (var i = 0; i < chats[userName + recipientName].length; i++) {
         insert('chat', chats[userName + recipientName][i]);
     }
+
+    scrollToBottom();
 }
 
 function search() {
@@ -332,4 +336,8 @@ function addZero(i) {
         i = "0" + i;
     }
     return i;
+}
+
+function scrollToBottom() {
+    id('chat').scrollTop = id('chat').scrollHeight;
 }
