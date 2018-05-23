@@ -8,6 +8,8 @@ id('contacts').style.display = 'none';
 id('chatScreen').style.display = 'none';
 id('notif').style.display = 'none';
 id('createAcc').style.display = 'none';
+id('loginField').value = localStorage.getItem("username");
+id('passField').value = localStorage.getItem("password");
 
 //http requests
 function login() {
@@ -15,6 +17,11 @@ function login() {
     if (id('loginField').value === '' || id('passField').value === '') {
         alert("Enter both fields!");
         return;
+    }
+
+    if (id('checkBox').checked) {
+        localStorage.setItem("username", id('loginField').value);
+        localStorage.setItem("password", id('passField').value);
     }
 
     var xhr = new XMLHttpRequest();
@@ -136,6 +143,7 @@ function sendMessage(message) {
 }
 
 //update screen function
+/** @namespace data.msg */
 function updateScreen(msg) {
     console.log(msg);
     var data = JSON.parse(msg.data);
@@ -168,12 +176,11 @@ function updateScreen(msg) {
             id('usrList').appendChild(item);
         }
     } else if (data.key === "message") {
-        if (!isHidden(id('chatScreen'))) {
+        if (!isHidden(id('chatScreen')) && data.msg.sender === ) {
             if (data.status === "Fail") {
                 alert(data.message);
             } else {
                 if (data.msg.sender === userName) {
-                    /** @namespace data.msg */
                     insert("chat", {sender: "", message: data.msg.message, time: data.time});
                     chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
                 } else {
