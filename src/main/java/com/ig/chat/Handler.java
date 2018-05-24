@@ -68,6 +68,7 @@ public class Handler {
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
+        LOG.info("Message: {}", message);
         if (!message.equals("ping")) {
             final Message msg = gson.fromJson(message, Message.class);
             LOG.info("{}", msg);

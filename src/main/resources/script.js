@@ -91,7 +91,7 @@ function createAcc() {
             alert(json.message);
             if (json.status) {
                 id('createAcc').style.display = 'none';
-                id('login').style.display = 'block';
+                id('login').style.display = 'inline-block';
                 document.title = "Login";
                 id('loginField').innerHTML = '';
                 id('passField').innerHTML = '';
@@ -176,7 +176,7 @@ function updateScreen(msg) {
             id('usrList').appendChild(item);
         }
     } else if (data.key === "message") {
-        if (!isHidden(id('chatScreen')) && data.msg.sender === ) {
+        if (!isHidden(id('chatScreen')) && data.msg.sender === userName) {
             if (data.status === "Fail") {
                 alert(data.message);
             } else {
