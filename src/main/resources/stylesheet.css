@@ -206,6 +206,17 @@ textarea::placeholder {
 }
 
 /*************/
+#searchUser {
+    padding: 5px;
+    width: 30%;
+
+}
+
+#list {
+    border: 2px solid black;
+    width: 30%;
+    padding: 5px;
+}
 
 /* display of user list in contacts*/
 ul {

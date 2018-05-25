@@ -21,9 +21,9 @@ public class Server {
 
     private void run() {
         //add some dummy accounts
-        Account a = new Account("Test1", "hello123");
-        Account b = new Account("Test2", "123hello");
-        Account c = new Account("Test3", "hello");
+        Account a = new Account("Bob", "bob");
+        Account b = new Account("Jack", "jack");
+        Account c = new Account("Giant", "giant");
         userList.add(a);
         userList.add(b);
         userList.add(c);

@@ -1,3 +1,4 @@
+//global variables
 var userName;
 var recipientName;
 var ws;
@@ -107,10 +108,23 @@ function createAcc() {
     xhr.send(username);
 }
 
+//switch screens
 function createAccount() {
     id('login').style.display = 'none';
     id('createAcc').style.display = 'inline-block';
     document.title = "Create Account";
+}
+
+function backToContacts() {
+    id('chatScreen').style.display = 'none';
+    id('contacts').style.display = 'block';
+    id('notif').style.display = 'none';
+    document.title = "Contacts";
+}
+
+function backTo() {
+    id('createAcc').style.display = 'none';
+    id('login').style.display = 'inline-block';
 }
 
 //websocket start function
@@ -207,10 +221,6 @@ function updateScreen(msg) {
 }
 
 function insert(targetID, message) {
-    // var date = new Date();
-    // var h = addZero(date.getHours());
-    // var m = addZero(date.getMinutes());
-
     var colour = colorPick(message.sender);
     var list = id('msgList');
     var li = document.createElement('li');
@@ -281,13 +291,6 @@ function startChat(item) {
     }
 }
 
-function backToContacts() {
-    id('chatScreen').style.display = 'none';
-    id('contacts').style.display = 'block';
-    id('notif').style.display = 'none';
-    document.title = "Contacts";
-}
-
 //helper classes
 function id(id) {
     return document.getElementById(id);
@@ -299,11 +302,6 @@ function isHidden(el) {
 
 function ignoreMessage() {
     id('notif').style.display = 'none';
-}
-
-function backTo() {
-    id('createAcc').style.display = 'none';
-    id('login').style.display = 'inline-block';
 }
 
 function readMessage() {
