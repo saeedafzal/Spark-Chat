@@ -98,6 +98,7 @@ public class Handler {
         for (Account u : onlineUsers.keySet()) {
             if (u.getUsername().equals(msg.getReceiver())) {
                 session = onlineUsers.get(u);
+                break;
             }
         }
         return session;

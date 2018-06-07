@@ -164,7 +164,7 @@ function updateScreen(msg) {
     //data has 'key' determining type of message
 
     if (data.key === "userlist") {  //update contacts with user list
-        id('usrList').innerHTML = "";
+        id('all-ul').innerHTML = "";
         for (var i = 0; i < data.list.length; i++) {
             var item = document.createElement('li');
             item.setAttribute('id', 'li' + i);
@@ -187,7 +187,7 @@ function updateScreen(msg) {
             } else {
                 continue;
             }
-            id('usrList').appendChild(item);
+            id('all-ul').appendChild(item);
         }
     } else if (data.key === "message") {
         if (!isHidden(id('chatScreen')) && data.msg.sender === userName) {
@@ -344,3 +344,5 @@ function search() {
 function scrollToBottom() {
     id('chat').scrollTop = id('chat').scrollHeight;
 }
+
+//contacts list functions
