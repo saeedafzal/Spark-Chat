@@ -14,7 +14,6 @@ id('passField').value = localStorage.getItem("password");
 
 //http requests
 function login() {
-    document.body.style.background = "#C5DDEB";
     if (id('loginField').value === '' || id('passField').value === '') {
         alert("Enter both fields!");
         return;

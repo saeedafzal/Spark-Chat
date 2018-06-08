@@ -93,7 +93,7 @@ public class Handler {
     }
 
     //get sessions to send message to
-    private Session getReceiverSession(Message msg) {
+    Session getReceiverSession(Message msg) {
         Session session = null;
         for (Account u : onlineUsers.keySet()) {
             if (u.getUsername().equals(msg.getReceiver())) {
