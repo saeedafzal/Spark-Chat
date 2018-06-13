@@ -7,7 +7,7 @@ var chats = {};
 //hide divs
 id('contacts').style.display = 'none';
 id('chatScreen').style.display = 'none';
-id('notif').style.display = 'none';
+// id('notif').style.display = 'none';
 id('createAcc').style.display = 'none';
 id('loginField').value = localStorage.getItem("username");
 id('passField').value = localStorage.getItem("password");
