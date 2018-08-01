@@ -44,30 +44,27 @@
 </div>
 
 <!-- contacts -->
-<div id="contacts">
-    <button onclick="logout()">Logout</button>
+<div class="contact-wrapper" id="con">
+    <div class="topBar">
+        <button onclick="logout()" id="logout-button">Logout</button>
+    </div>
+    <div id="contacts">
+        <div class="contact-con">
+            <div class="contact-show">
+                <div class="header">Contacts</div>
+                <div class="list">
+                    <ul id="con-list"></ul>
+                </div>
+            </div>
 
-    <div class="contact-con">
-        <div id="search">
-            <input type="text" id="searchUser" onkeyup="search()" placeholder="Search for users.." class="change">
-            <div id="list">
-                <ul id="usrList"></ul>
+            <div id="search">
+                <input type="text" id="searchUser" onkeyup="search()" placeholder="Search for users.." class="change">
+                <div id="list">
+                    <ul id="usrList"></ul>
+                </div>
             </div>
         </div>
     </div>
-
-    <!--<div id="search">-->
-    <!--<input type="text" id="searchUser" onkeyup="search()" placeholder="Search for users.." class="change">-->
-    <!--<div id="list">-->
-    <!--<ul id="usrList"></ul>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--<div id="notif">-->
-    <!--<div id="notifText"></div>-->
-    <!--<button onclick="readMessage()">Read Message</button>-->
-    <!--<button onclick="ignoreMessage()">Ignore</button>-->
-    <!--</div>-->
 </div>
 
 <!-- Chat Screen -->
@@ -91,7 +88,6 @@
         </div>
     </div>
 </div>
-
 
 <script src="script.js"></script>
 </body>

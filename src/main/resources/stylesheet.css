@@ -2,7 +2,8 @@ body {
     font: 14px/20px "Lato", Arial, sans-serif;
     padding: 40px 0;
     color: white;
-    background: url("images/blueBack.jpg");
+    background: url("images/blured.jpg");
+    margin: 0;
 }
 
 ::placeholder {
@@ -12,6 +13,11 @@ body {
 /*login page*/
 .login-wrapper {
     text-align: center;
+}
+
+.contact-wrapper {
+    text-align: center;
+    display: block;
 }
 
 #login {
@@ -92,10 +98,19 @@ body {
 /******************/
 
 /*Contacts page */
+.topBar {
+    height: 8vh;
+    margin-bottom: 20px;
+    background: rgba(142, 123, 123, 0.4);
+}
+
+#contacts {
+    display: inline-block;
+}
 .contact-con {
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 28%;
+    width: 1000px;
     background: rgba(0, 0, 0, 0.1);
     height: 80vh;
 }
@@ -107,10 +122,99 @@ body {
 
 #usrList {
     padding: 0;
+    height: 100%;
 }
 
 #search {
     height: 50%;
+}
+
+.searchUsr {
+    border: 1px solid white;
+    width: 50%;
+    height: 15%;
+    font-size: 30px;
+    margin-left: 25%;
+    padding-top: 20px;
+    background: linear-gradient(to bottom, #a7cfdf 0%,#23538a 100%);
+}
+
+.searchUsr:hover {
+    background: linear-gradient(to bottom, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+}
+
+.searchUsr:focus {
+    background: linear-gradient(to bottom, #e0f3fa 0%,#d8f0fc 50%,#b8e2f6 51%,#b6dffd 100%);
+}
+
+.contact-show {
+    height: 50%;
+}
+
+.contact-show .header {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: rgba(142, 123, 123, 0.4);
+    padding: 10px;
+}
+
+.contact-show .list {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 80%;
+    background: rgba(0, 77, 144, 0.25);
+}
+
+.nameItem {
+    width: 100%;
+    height: 15%;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.pic {
+    width: 13%;
+    border: 1px solid black;
+    height: 100%;
+    float: left;
+}
+
+.info {
+    border: 1px solid black;
+    height: 100%;
+    width: 75%;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: hidden;
+}
+
+.info, .info::after, .info::before {
+    transition: all .5s;
+}
+
+.info:hover {
+    background: #555;
+    color: aliceblue;
+}
+
+#list {
+    width: 97%;
+    padding: 5px;
+    height: 85%;
+}
+
+#logout-button {
+    color: #4f7492;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #F2F5F8;
+    width: 100px;
+    padding: 5px;
+    position: absolute;
+    left: 90%;
+    top: 2%;
 }
 
 /*******************/
@@ -232,11 +336,6 @@ textarea::placeholder {
 }
 
 /*************/
-
-#list {
-    width: 97%;
-    padding: 5px;
-}
 
 /* display of user list in contacts*/
 ul {

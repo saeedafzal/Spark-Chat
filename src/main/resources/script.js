@@ -5,7 +5,7 @@ var ws;
 var chats = {};
 
 //hide divs
-id('contacts').style.display = 'none';
+id('con').style.display = 'none';
 id('chatScreen').style.display = 'none';
 // id('notif').style.display = 'none';
 id('createAcc').style.display = 'none';
@@ -33,17 +33,16 @@ function login() {
             console.log(json);
             if (json.status === true) {
                 id('login').style.display = 'none';
-                id('contacts').style.display = 'block';
+                document.body.style.padding = '0';
+                id('con').style.display = 'block';
                 document.title = 'Contacts';
                 startSocket();
                 // userList();
                 alert("LOGGED IN!");
-            } else {
-                alert(json.message);
-            }
+            } else alert(json.message);
         }
     };
-    userName = document.getElementById('loginField').value;
+    userName = id('loginField').value;
     var username = JSON.stringify({
         username: id('loginField').value,
         password: id('passField').value
@@ -62,9 +61,7 @@ function logout() {
             if (json.status === true) {
                 ws.close();
                 document.write(json.message);
-            } else {
-                alert(json.message);
-            }
+            } else alert(json.message);
         }
     };
     xhr.send(userName);
@@ -91,6 +88,7 @@ function createAcc() {
             alert(json.message);
             if (json.status) {
                 id('createAcc').style.display = 'none';
+                document.body.style.padding = '40px 0';
                 id('login').style.display = 'inline-block';
                 document.title = "Login";
                 id('loginField').innerHTML = '';
@@ -110,19 +108,21 @@ function createAcc() {
 //switch screens
 function createAccount() {
     id('login').style.display = 'none';
+    document.body.style.padding = '0';
     id('createAcc').style.display = 'inline-block';
     document.title = "Create Account";
 }
 
 function backToContacts() {
     id('chatScreen').style.display = 'none';
-    id('contacts').style.display = 'block';
+    id('con').style.display = 'block';
     id('notif').style.display = 'none';
     document.title = "Contacts";
 }
 
 function backTo() {
     id('createAcc').style.display = 'none';
+    document.body.style.padding = '40px 0';
     id('login').style.display = 'inline-block';
 }
 
@@ -141,10 +141,9 @@ function startSocket() {
     id("send").addEventListener("click", function () {
         sendMessage(id("messageField").value);
     });
+
     id("messageField").addEventListener("keypress", function (e) {
-        if (e.keyCode === 13) {
-            sendMessage(e.target.value);
-        }
+        if (e.keyCode === 13) sendMessage(e.target.value);
     });
 }
 
@@ -167,6 +166,10 @@ function updateScreen(msg) {
         for (var i = 0; i < data.list.length; i++) {
             var item = document.createElement('li');
             item.setAttribute('id', 'li' + i);
+            item.setAttribute('class', 'searchUsr');
+            item.onclick = function() {
+                focusCss(this.id);
+            };
             item.onclick = function () {
                 startChat(this.id);
             };
@@ -183,16 +186,13 @@ function updateScreen(msg) {
                     item.style.color = "red";
                     console.log(item);
                 }
-            } else {
-                continue;
-            }
+            } else continue;
             id('usrList').appendChild(item);
         }
     } else if (data.key === "message") {
         if (!isHidden(id('chatScreen'))) {
-            if (data.status === "Fail") {
-                alert(data.message);
-            } else {
+            if (data.status === "Fail") alert(data.message);
+            else {
                 if (data.msg.sender === userName) {
                     insert("chat", {sender: "", message: data.msg.message, time: data.time});
                     chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
@@ -244,11 +244,8 @@ function insert(targetID, message) {
     div2.style.background = colour;
     div2.style.cssFloat = dirCheck(message.sender);
     div2.style.textAlign = dirCheck(message.sender);
-    if (message.sender === "") {
-        div2.setAttribute('class', 'my-message');
-    } else {
-        div2.setAttribute('class', 'other-message');
-    }
+    if (message.sender === "") div2.setAttribute('class', 'my-message');
+    else div2.setAttribute('class', 'other-message');
     div2.innerHTML = message.message;
 
     li.appendChild(div);
@@ -259,27 +256,18 @@ function insert(targetID, message) {
 }
 
 function checkForSender(message) {
-    if (message.sender === "") {
-        return "";
-    } else {
-        return message.sender;
-    }
+    if (message.sender === "") return "";
+    else return message.sender;
 }
 
 function dirCheck(sender) {
-    if (sender === recipientName) {
-        return "left";
-    } else {
-        return "right";
-    }
+    if (sender === recipientName) return "left";
+    else return "right";
 }
 
 function colorPick(sender) {
-    if (sender === recipientName) {
-        return "rgb(148, 194, 237)";
-    } else {
-        return "rgb(119, 199, 118)";
-    }
+    if (sender === recipientName) return "rgb(148, 194, 237)";
+    else return "rgb(119, 199, 118)";
 }
 
 function startChat(item) {
@@ -299,8 +287,12 @@ function isHidden(el) {
     return (el.offsetParent === null);
 }
 
-function ignoreMessage() {
+/*function ignoreMessage() {
     id('notif').style.display = 'none';
+}*/
+
+function focusCss() {
+
 }
 
 function readMessage() {
@@ -311,13 +303,11 @@ function readMessage() {
 
     document.title = recipientName;
     id('talkingTo').innerHTML = recipientName;
-    id('contacts').style.display = 'none';
+    id('con').style.display = 'none';
     id('msgList').innerHTML = "";
     id('chatScreen').style.display = 'block';
 
-    for (var i = 0; i < chats[userName + recipientName].length; i++) {
-        insert('chat', chats[userName + recipientName][i]);
-    }
+    for (var i = 0; i < chats[userName + recipientName].length; i++) insert('chat', chats[userName + recipientName][i]);
 
     scrollToBottom();
 }
@@ -332,11 +322,8 @@ function search() {
     for (var i = 0; i < li.length; i++) {
         a = li[i];
         console.log("Item in list: " + a.innerHTML);
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
+        else li[i].style.display = "none";
     }
 }
 

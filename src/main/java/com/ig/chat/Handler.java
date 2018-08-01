@@ -26,7 +26,7 @@ public class Handler {
     private static final Logger LOG = LoggerFactory.getLogger(Handler.class); //Logger
     private final Gson gson = new GsonBuilder().create();
     private final Queue<Session> sessions = new ConcurrentLinkedQueue<>(); //for broadcasts
-    private Map<Account, Session> onlineUsers = new HashMap<>();
+    private final Map<Account, Session> onlineUsers = new HashMap<>();
 
     @OnWebSocketConnect
     public void onConnect(Session session) {
@@ -42,9 +42,7 @@ public class Handler {
                     break;
                 }
             }
-            if (acc.getStatus() == null || !acc.getStatus().equals("ONLINE")) {
-                acc.setStatus("OFFLINE");
-            }
+            if (acc.getStatus() == null || !acc.getStatus().equals("ONLINE")) acc.setStatus("OFFLINE");
         }
 
         broadcast();
@@ -87,16 +85,14 @@ public class Handler {
             } catch (IOException io) {
                 LOG.error("Failed to send message!", io);
             }
-        } else {
-            LOG.info("{}", message);
-        }
+        } else LOG.info("{}", message);
     }
 
     //get sessions to send message to
     Session getReceiverSession(Message msg) {
         Session session = null;
         for (Account u : onlineUsers.keySet()) {
-            if (u.getUsername().equals(msg.getReceiver())) {
+                if (u.getUsername().equals(msg.getReceiver())) {
                 session = onlineUsers.get(u);
                 break;
             }
@@ -106,17 +102,13 @@ public class Handler {
 
     //get current time
     private String getTime() {
-        LocalDateTime dateTime = LocalDateTime.now();
-
-        int hour = dateTime.getHour();
-        System.out.println("Hour: " + hour);
-
-        int minute = dateTime.getMinute();
-        System.out.println("Minute: " + minute);
-
-        String time = Integer.toString(hour) + ":" + Integer.toString(minute);
-        System.out.println("Time: " + time);
-
+        final LocalDateTime dateTime = LocalDateTime.now();
+        final int hour = dateTime.getHour();
+        LOG.info("Hour: {}" + hour);
+        final int minute = dateTime.getMinute();
+        LOG.info("Minute: {}" + minute);
+        final String time = Integer.toString(hour) + ":" + Integer.toString(minute);
+        LOG.info("Time: {}" + time);
         return time;
     }
 

@@ -15,15 +15,15 @@ import static spark.Spark.*;
 public class Server {
     private static final Logger LOG = LoggerFactory.getLogger(Server.class);
     private final Gson gson = new GsonBuilder().create();
-    private List<Account> onlineList = new ArrayList<>(); //list version of online users
-    static List<Account> userList = new ArrayList<>(); //list of all online users
+    private final List<Account> onlineList = new ArrayList<>(); //list version of online users
+    static final List<Account> userList = new ArrayList<>(); //list of all online users
     static Account account; //current user to be dealt with
 
     private void run() {
         //add some dummy accounts
-        Account a = new Account("Bob", "bob");
-        Account b = new Account("Jack", "jack");
-        Account c = new Account("Giant", "giant");
+        final Account a = new Account("Bob", "bob");
+        final Account b = new Account("Jack", "jack");
+        final Account c = new Account("Giant", "giant");
         userList.add(a);
         userList.add(b);
         userList.add(c);
@@ -46,16 +46,10 @@ public class Server {
             }
 
             //check if user online
-            if (exists) {
-                if (!(onlineList.size() < 1)) {
-                    for (Account acc : onlineList) {
-                        if (acc.getUsername().equals(account.getUsername())) online = true;
-                    }
-                }
-            } else {
+            if (exists) if (!(onlineList.size() < 1)) for (Account acc : onlineList) if (acc.getUsername().equals(account.getUsername())) online = true;
+            else {
                 response.setMessage("User does not exist!");
                 response.setStatus(false);
-
                 return gson.toJson(response);
             }
 
@@ -72,7 +66,7 @@ public class Server {
         });
 
         post("/logout", (req, res) -> {
-            StatusResponse response = new StatusResponse();
+            final StatusResponse response = new StatusResponse();
             //check if user is already offline
             response.setStatus(true);
             response.setMessage("You have logged out!");
@@ -90,8 +84,8 @@ public class Server {
         });
 
         post("/createAccount", (req, res) -> {
-            StatusResponse response = new StatusResponse();
-            Account account = gson.fromJson(req.body(), Account.class);
+            final StatusResponse response = new StatusResponse();
+            final Account account = gson.fromJson(req.body(), Account.class);
             boolean taken = false;
 
             for (Account ac : userList) {
@@ -106,7 +100,6 @@ public class Server {
 
             if (!taken) {
                 userList.add(account);
-
                 response.setMessage("Created Account");
                 response.setStatus(true);
             }
@@ -118,14 +111,10 @@ public class Server {
     //CORS code
     private static void enableCORS() {
         options("/*", (request, response) -> {
-            String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
-            if (accessControlRequestHeaders != null) {
-                response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
-            }
-            String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
-            if (accessControlRequestMethod != null) {
-                response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
-            }
+            final String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            final String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
             return "OK";
         });
 
