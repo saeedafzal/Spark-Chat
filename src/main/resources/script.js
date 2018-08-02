@@ -3,6 +3,8 @@ var userName;
 var recipientName;
 var ws;
 var chats = {};
+var clickedEl;
+var currentContacts = [];
 
 //hide divs
 id('con').style.display = 'none';
@@ -11,6 +13,10 @@ id('chatScreen').style.display = 'none';
 id('createAcc').style.display = 'none';
 id('loginField').value = localStorage.getItem("username");
 id('passField').value = localStorage.getItem("password");
+
+document.addEventListener("click", function() {
+    document.getElementById("rmenu").className = "hide";
+});
 
 //http requests
 function login() {
@@ -35,6 +41,7 @@ function login() {
                 id('login').style.display = 'none';
                 document.body.style.padding = '0';
                 id('con').style.display = 'block';
+                document.body.style.background = '';
                 document.title = 'Contacts';
                 startSocket();
                 // userList();
@@ -90,6 +97,7 @@ function createAcc() {
                 id('createAcc').style.display = 'none';
                 document.body.style.padding = '40px 0';
                 id('login').style.display = 'inline-block';
+                document.body.style.background = 'url("images/backgroundBlur.jpg")';
                 document.title = "Login";
                 id('loginField').innerHTML = '';
                 id('passField').innerHTML = '';
@@ -116,6 +124,7 @@ function createAccount() {
 function backToContacts() {
     id('chatScreen').style.display = 'none';
     id('con').style.display = 'block';
+    document.body.style.background = '';
     id('notif').style.display = 'none';
     document.title = "Contacts";
 }
@@ -124,6 +133,7 @@ function backTo() {
     id('createAcc').style.display = 'none';
     document.body.style.padding = '40px 0';
     id('login').style.display = 'inline-block';
+    document.body.style.background = 'url("images/backgroundBlur.jpg")';
 }
 
 //websocket start function
@@ -173,6 +183,14 @@ function updateScreen(msg) {
             item.onclick = function () {
                 startChat(this.id);
             };
+            item.addEventListener('contextmenu', function(e) {
+                clickedEl = this.id;
+                id("rmenu").className = "show";
+                id("rmenu").style.top =  mouseY(event) + "px";
+                id("rmenu").style.left = mouseX(event) + "px";
+                window.event.returnValue = false;
+                e.preventDefault();
+            });
             if (data.list[i].username !== userName) {
                 item.onclick = function () {
                     startChat(this.id);
@@ -216,6 +234,30 @@ function updateScreen(msg) {
             id('notifText').innerHTML = 'Received a message from ' + recipientName;
             new Notification("You have received a message from " + recipientName);
         }
+    }
+}
+
+function mouseX(evt) {
+    if (evt.pageX) {
+        return evt.pageX;
+    } else if (evt.clientX) {
+        return evt.clientX + (document.documentElement.scrollLeft ?
+            document.documentElement.scrollLeft :
+            document.body.scrollLeft);
+    } else {
+        return null;
+    }
+}
+
+function mouseY(evt) {
+    if (evt.pageY) {
+        return evt.pageY;
+    } else if (evt.clientY) {
+        return evt.clientY + (document.documentElement.scrollTop ?
+            document.documentElement.scrollTop :
+            document.body.scrollTop);
+    } else {
+        return null;
     }
 }
 
@@ -329,6 +371,23 @@ function search() {
 
 function scrollToBottom() {
     id('chat').scrollTop = id('chat').scrollHeight;
+}
+
+function addToFav() {
+    for (var i=0; i<currentContacts.length; i++) {
+        if (currentContacts[i] === id(clickedEl).innerHTML) {
+            alert("User added already!");
+            return;
+        }
+    }
+    var li = document.createElement('li');
+    li.innerHTML = id(clickedEl).innerHTML;
+    id('con-list').appendChild(li);
+    currentContacts.push(li.innerHTML);
+}
+
+function hideContext() {
+    id('rmenu').className = 'hide';
 }
 
 //contacts list functions

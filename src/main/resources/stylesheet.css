@@ -2,7 +2,7 @@ body {
     font: 14px/20px "Lato", Arial, sans-serif;
     padding: 40px 0;
     color: white;
-    background: url("images/blured.jpg");
+    background: url("images/light.jpg");
     margin: 0;
 }
 
@@ -101,12 +101,13 @@ body {
 .topBar {
     height: 8vh;
     margin-bottom: 20px;
-    background: rgba(142, 123, 123, 0.4);
+    background: rgba(0, 117, 113, 0.4);
 }
 
 #contacts {
     display: inline-block;
 }
+
 .contact-con {
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -136,15 +137,15 @@ body {
     font-size: 30px;
     margin-left: 25%;
     padding-top: 20px;
-    background: linear-gradient(to bottom, #a7cfdf 0%,#23538a 100%);
+    background: linear-gradient(to bottom, #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%);
 }
 
 .searchUsr:hover {
-    background: linear-gradient(to bottom, #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%);
+    background: linear-gradient(to bottom, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
 }
 
 .searchUsr:focus {
-    background: linear-gradient(to bottom, #e0f3fa 0%,#d8f0fc 50%,#b8e2f6 51%,#b6dffd 100%);
+    background: linear-gradient(to bottom, #e0f3fa 0%, #d8f0fc 50%, #b8e2f6 51%, #b6dffd 100%);
 }
 
 .contact-show {
@@ -153,7 +154,7 @@ body {
 
 .contact-show .header {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background: rgba(142, 123, 123, 0.4);
+    background: rgba(0, 117, 113, 0.4);
     padding: 10px;
 }
 
@@ -345,5 +346,30 @@ ul {
 /*********/
 
 .change::-webkit-input-placeholder {
+    color: #434651;
+}
+
+.show {
+    z-index: 1000;
+    position: absolute;
+    background-color: #C0C0C0;
+    border: 1px solid blue;
+    padding: 2px;
+    display: block;
+    margin: 0;
+    list-style: none none;
+}
+
+.hide {
+    display: none;
+}
+
+.context-list {
+    padding: 5px;
+    list-style-type: none;
+}
+
+.context-list li:hover {
+    background: white;
     color: #434651;
 }

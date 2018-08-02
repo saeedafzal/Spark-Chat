@@ -46,8 +46,13 @@ public class Server {
             }
 
             //check if user online
-            if (exists) if (!(onlineList.size() < 1)) for (Account acc : onlineList) if (acc.getUsername().equals(account.getUsername())) online = true;
-            else {
+            if (exists) {
+                if (!(onlineList.size() < 1)) {
+                    for (Account acc : onlineList) {
+                        if (acc.getUsername().equals(account.getUsername())) online = true;
+                    }
+                }
+            } else {
                 response.setMessage("User does not exist!");
                 response.setStatus(false);
                 return gson.toJson(response);
