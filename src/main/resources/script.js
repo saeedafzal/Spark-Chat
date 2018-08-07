@@ -125,7 +125,7 @@ function backToContacts() {
     id('chatScreen').style.display = 'none';
     id('con').style.display = 'block';
     document.body.style.background = '';
-    id('notif').style.display = 'none';
+    // id('notif').style.display = 'none';
     document.title = "Contacts";
 }
 
@@ -211,6 +211,7 @@ function updateScreen(msg) {
         if (!isHidden(id('chatScreen'))) {
             if (data.status === "Fail") alert(data.message);
             else {
+                if (!chats.hasOwnProperty(userName + recipientName)) chats[userName+recipientName]=[];
                 if (data.msg.sender === userName) {
                     insert("chat", {sender: "", message: data.msg.message, time: data.time});
                     chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
@@ -224,16 +225,34 @@ function updateScreen(msg) {
                 }
             }
         } else {
-            recipientName = data.sender;
-            if (!chats.hasOwnProperty(userName + recipientName)) {
-                chats[userName + recipientName] = [];
-                console.log(chats);
+            if (data.status === "Fail") alert(data.message);
+            else {
+                recipientName = data.sender;
+                if (!chats.hasOwnProperty(userName + recipientName)) {
+                    chats[userName + recipientName] = [];
+                    console.log(chats);
+                }
+                var liList = document.getElementsByClassName('searchUsr');
+                for (var i=0; i<liList.length; i++) {
+                    if (liList[i].textContent === recipientName) {
+                        userListPending(liList[i]);
+                        break;
+                    }
+                }
+                chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                new Notification("You have received a message from " + recipientName);
             }
-            chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
-            id('notif').style.display = 'block';
-            id('notifText').innerHTML = 'Received a message from ' + recipientName;
-            new Notification("You have received a message from " + recipientName);
         }
+    }
+}
+
+function userListPending(e) {
+    if (id(recipientName)) id(recipientName).style.display = 'block';
+    else {
+        var div = document.createElement('div');
+        div.className = 'indication';
+        div.setAttribute('id', recipientName);
+        e.appendChild(div);
     }
 }
 
@@ -313,9 +332,10 @@ function colorPick(sender) {
 }
 
 function startChat(item) {
+    if (id(recipientName)) id(recipientName).style.display = 'none';
     var color = window.getComputedStyle(id(item)).getPropertyValue('color');
     if (color === "rgb(0, 128, 0)") { //online
-        recipientName = id(item).innerHTML;
+        recipientName = id(item).textContent;
         readMessage();
     }
 }
@@ -338,10 +358,10 @@ function focusCss() {
 }
 
 function readMessage() {
-    if (!chats.hasOwnProperty(userName + recipientName)) {
+    /*if (!chats.hasOwnProperty(userName + recipientName)) {
         chats[userName + recipientName] = [];
         console.log(chats);
-    }
+    }*/
 
     document.title = recipientName;
     id('talkingTo').innerHTML = recipientName;
@@ -349,7 +369,9 @@ function readMessage() {
     id('msgList').innerHTML = "";
     id('chatScreen').style.display = 'block';
 
-    for (var i = 0; i < chats[userName + recipientName].length; i++) insert('chat', chats[userName + recipientName][i]);
+    for (var i = 0; i < chats[userName + recipientName].length; i++) {
+        insert('chat', chats[userName + recipientName][i]);
+    }
 
     scrollToBottom();
 }

@@ -10,7 +10,11 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static spark.Spark.*;
+import static spark.Spark.before;
+import static spark.Spark.options;
+import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
+import static spark.Spark.webSocket;
 
 public class Server {
     private static final Logger LOG = LoggerFactory.getLogger(Server.class);

@@ -373,3 +373,13 @@ ul {
     background: white;
     color: #434651;
 }
+
+.indication {
+    border: 1px solid black;
+    width: 5%;
+    height: 50%;
+    position: relative;
+    left: 80%;
+    bottom: 50%;
+    background-color: black;
+}
