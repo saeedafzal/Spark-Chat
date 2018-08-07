@@ -14,7 +14,7 @@ id('createAcc').style.display = 'none';
 id('loginField').value = localStorage.getItem("username");
 id('passField').value = localStorage.getItem("password");
 
-document.addEventListener("click", function() {
+document.addEventListener("click", function () {
     document.getElementById("rmenu").className = "hide";
 });
 
@@ -173,20 +173,21 @@ function updateScreen(msg) {
 
     if (data.key === "userlist") {  //update contacts with user list
         id('usrList').innerHTML = "";
+        // noinspection JSDuplicatedDeclaration
         for (var i = 0; i < data.list.length; i++) {
             var item = document.createElement('li');
             item.setAttribute('id', 'li' + i);
             item.setAttribute('class', 'searchUsr');
-            item.onclick = function() {
+            item.onclick = function () {
                 focusCss(this.id);
             };
             item.onclick = function () {
                 startChat(this.id);
             };
-            item.addEventListener('contextmenu', function(e) {
+            item.addEventListener('contextmenu', function (e) {
                 clickedEl = this.id;
                 id("rmenu").className = "show";
-                id("rmenu").style.top =  mouseY(event) + "px";
+                id("rmenu").style.top = mouseY(event) + "px";
                 id("rmenu").style.left = mouseX(event) + "px";
                 window.event.returnValue = false;
                 e.preventDefault();
@@ -211,7 +212,7 @@ function updateScreen(msg) {
         if (!isHidden(id('chatScreen'))) {
             if (data.status === "Fail") alert(data.message);
             else {
-                if (!chats.hasOwnProperty(userName + recipientName)) chats[userName+recipientName]=[];
+                if (!chats.hasOwnProperty(userName + recipientName)) chats[userName + recipientName] = [];
                 if (data.msg.sender === userName) {
                     insert("chat", {sender: "", message: data.msg.message, time: data.time});
                     chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
@@ -233,16 +234,27 @@ function updateScreen(msg) {
                     console.log(chats);
                 }
                 var liList = document.getElementsByClassName('searchUsr');
-                for (var i=0; i<liList.length; i++) {
+                // noinspection JSDuplicatedDeclaration
+                for (var i = 0; i < liList.length; i++) {
                     if (liList[i].textContent === recipientName) {
                         userListPending(liList[i]);
                         break;
                     }
                 }
                 chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
-                new Notification("You have received a message from " + recipientName);
+                notify(data.sender);
             }
         }
+    }
+}
+
+function notify(sender) {
+    if (window.Notification && Notification.permission !== "denied") {
+        Notification.requestPermission(function (status) {  // status is "granted", if accepted by user
+            new Notification('Title', {
+                body: 'Received message from ' + sender
+            });
+        });
     }
 }
 
@@ -396,7 +408,7 @@ function scrollToBottom() {
 }
 
 function addToFav() {
-    for (var i=0; i<currentContacts.length; i++) {
+    for (var i = 0; i < currentContacts.length; i++) {
         if (currentContacts[i] === id(clickedEl).innerHTML) {
             alert("User added already!");
             return;
