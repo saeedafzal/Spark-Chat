@@ -173,7 +173,6 @@ function updateScreen(msg) {
 
     if (data.key === "userlist") {  //update contacts with user list
         id('usrList').innerHTML = "";
-        // noinspection JSDuplicatedDeclaration
         for (var i = 0; i < data.list.length; i++) {
             var item = document.createElement('li');
             item.setAttribute('id', 'li' + i);
@@ -209,42 +208,83 @@ function updateScreen(msg) {
             id('usrList').appendChild(item);
         }
     } else if (data.key === "message") {
-        if (!isHidden(id('chatScreen'))) {
-            if (data.status === "Fail") alert(data.message);
-            else {
-                if (!chats.hasOwnProperty(userName + recipientName)) chats[userName + recipientName] = [];
-                if (data.msg.sender === userName) {
-                    insert("chat", {sender: "", message: data.msg.message, time: data.time});
-                    chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
-                } else {
-                    insert("chat", {sender: data.sender, message: data.msg.message, time: data.time});
-                    chats[userName + recipientName].push({
-                        sender: data.sender,
-                        message: data.msg.message,
-                        time: data.time
-                    });
-                }
-            }
-        } else {
-            if (data.status === "Fail") alert(data.message);
-            else {
-                recipientName = data.sender;
-                if (!chats.hasOwnProperty(userName + recipientName)) {
-                    chats[userName + recipientName] = [];
-                    console.log(chats);
-                }
+        if (data.sender === userName) { // Display own message
+            recipientName = data.receiver;
+            if (!chats.hasOwnProperty(userName + data.receiver)) chats[userName + data.receiver] = [];
+            chats[userName + data.receiver].push({sender: "", message: data.msg.message, time: data.time});
+            insert("chat", {sender: "", message: data.msg.message, time: data.time});
+        } else { // Display other message
+            if (isHidden(id('chatScreen'))) { // In contacts screen
+                if (!chats.hasOwnProperty(userName + data.sender)) chats[userName + data.sender] = [];
                 var liList = document.getElementsByClassName('searchUsr');
-                // noinspection JSDuplicatedDeclaration
                 for (var i = 0; i < liList.length; i++) {
-                    if (liList[i].textContent === recipientName) {
+                    if (liList[i].textContent === data.sender) {
                         userListPending(liList[i]);
                         break;
                     }
                 }
-                chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                chats[userName + data.sender].push({sender: data.sender, message: data.msg.message, time: data.time});
                 notify(data.sender);
+            } else {
+                recipientName = data.sender;
+                if (id('talkingTo').innerHTML === data.sender) { // Chat screen with sender
+                    if (!chats.hasOwnProperty(userName + data.sender)) chats[userName + data.sender] = [];
+                    chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                    insert("chat", {sender: data.sender, message: data.msg.message, time: data.time});
+                } else { // Chat screen with someone else
+                    if (!chats.hasOwnProperty(userName + data.sender)) chats[userName + data.sender] = [];
+                    chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                    var liList = document.getElementsByClassName('searchUsr');
+                    for (var i = 0; i < liList.length; i++) {
+                        if (liList[i].textContent === data.sender) {
+                            userListPending(liList[i]);
+                            break;
+                        }
+                    }
+                }
             }
         }
+        /*if (data.sender !== userName) {
+            if (!isHidden(id('chatScreen'))) {
+                if (data.status === "Fail") alert(data.message);
+                else {
+                    if (!chats.hasOwnProperty(userName + recipientName)) chats[userName + recipientName] = [];
+                    if (data.msg.sender === userName) {
+                        insert("chat", {sender: "", message: data.msg.message, time: data.time});
+                        chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
+                    } else {
+                        if (id('talkingTo').innerHTML === data.sender) insert("chat", {sender: data.sender, message: data.msg.message, time: data.time});
+                        chats[userName + recipientName].push({
+                            sender: data.sender,
+                            message: data.msg.message,
+                            time: data.time
+                        });
+                    }
+                }
+            } else {
+                if (data.status === "Fail") alert(data.message);
+                else {
+                    recipientName = data.sender;
+                    if (!chats.hasOwnProperty(userName + recipientName)) {
+                        chats[userName + recipientName] = [];
+                        console.log(chats);
+                    }
+                    var liList = document.getElementsByClassName('searchUsr');
+                    for (var i = 0; i < liList.length; i++) {
+                        if (liList[i].textContent === recipientName) {
+                            userListPending(liList[i]);
+                            break;
+                        }
+                    }
+                    chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                    notify(data.sender);
+                }
+            }
+        } else if (data.sender === userName) {
+            if (!chats.hasOwnProperty(userName + recipientName)) chats[userName + recipientName] = [];
+            insert("chat", {sender: "", message: data.msg.message, time: data.time});
+            chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
+        }*/
     }
 }
 
@@ -259,11 +299,11 @@ function notify(sender) {
 }
 
 function userListPending(e) {
-    if (id(recipientName)) id(recipientName).style.display = 'block';
+    if (id(e.textContent)) id(e.textContent).style.display = 'block';
     else {
         var div = document.createElement('div');
         div.className = 'indication';
-        div.setAttribute('id', recipientName);
+        div.setAttribute('id', e.textContent);
         e.appendChild(div);
     }
 }
@@ -344,7 +384,7 @@ function colorPick(sender) {
 }
 
 function startChat(item) {
-    if (id(recipientName)) id(recipientName).style.display = 'none';
+    if (id(id(item).textContent)) id(id(item).textContent).style.display = 'none';
     var color = window.getComputedStyle(id(item)).getPropertyValue('color');
     if (color === "rgb(0, 128, 0)") { //online
         recipientName = id(item).textContent;
