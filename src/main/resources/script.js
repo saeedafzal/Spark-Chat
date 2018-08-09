@@ -244,54 +244,14 @@ function updateScreen(msg) {
                 }
             }
         }
-        /*if (data.sender !== userName) {
-            if (!isHidden(id('chatScreen'))) {
-                if (data.status === "Fail") alert(data.message);
-                else {
-                    if (!chats.hasOwnProperty(userName + recipientName)) chats[userName + recipientName] = [];
-                    if (data.msg.sender === userName) {
-                        insert("chat", {sender: "", message: data.msg.message, time: data.time});
-                        chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
-                    } else {
-                        if (id('talkingTo').innerHTML === data.sender) insert("chat", {sender: data.sender, message: data.msg.message, time: data.time});
-                        chats[userName + recipientName].push({
-                            sender: data.sender,
-                            message: data.msg.message,
-                            time: data.time
-                        });
-                    }
-                }
-            } else {
-                if (data.status === "Fail") alert(data.message);
-                else {
-                    recipientName = data.sender;
-                    if (!chats.hasOwnProperty(userName + recipientName)) {
-                        chats[userName + recipientName] = [];
-                        console.log(chats);
-                    }
-                    var liList = document.getElementsByClassName('searchUsr');
-                    for (var i = 0; i < liList.length; i++) {
-                        if (liList[i].textContent === recipientName) {
-                            userListPending(liList[i]);
-                            break;
-                        }
-                    }
-                    chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
-                    notify(data.sender);
-                }
-            }
-        } else if (data.sender === userName) {
-            if (!chats.hasOwnProperty(userName + recipientName)) chats[userName + recipientName] = [];
-            insert("chat", {sender: "", message: data.msg.message, time: data.time});
-            chats[userName + recipientName].push({sender: "", message: data.msg.message, time: data.time});
-        }*/
     }
 }
 
 function notify(sender) {
+    Notification.permission = undefined;
     if (window.Notification && Notification.permission !== "denied") {
-        Notification.requestPermission(function (status) {  // status is "granted", if accepted by user
-            new Notification('Title', {
+        Notification.requestPermission(function() {  // status is "granted", if accepted by user
+            new Notification('New Message Received', {
                 body: 'Received message from ' + sender
             });
         });

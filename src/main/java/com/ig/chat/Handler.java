@@ -88,7 +88,6 @@ public class Handler {
         } else LOG.info("{}", message);
     }
 
-    //get sessions to send message to
     Session getReceiverSession(Message msg) {
         Session session = null;
         for (Account u : onlineUsers.keySet()) {
@@ -104,12 +103,8 @@ public class Handler {
     private String getTime() {
         final LocalDateTime dateTime = LocalDateTime.now();
         final int hour = dateTime.getHour();
-        LOG.info("Hour: {}" + hour);
         final int minute = dateTime.getMinute();
-        LOG.info("Minute: {}" + minute);
-        final String time = Integer.toString(hour) + ":" + Integer.toString(minute);
-        LOG.info("Time: {}" + time);
-        return time;
+        return Integer.toString(hour) + ":" + Integer.toString(minute);
     }
 
     //broadcast
