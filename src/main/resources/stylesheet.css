@@ -383,3 +383,8 @@ ul {
     bottom: 50%;
     background-color: black;
 }
+
+.addButton {
+    position: absolute;
+    left: 65%;
+}

@@ -191,6 +191,13 @@ function updateScreen(msg) {
                 window.event.returnValue = false;
                 e.preventDefault();
             });
+            var addButton = document.createElement('button');
+            addButton.innerHTML = '+';
+            addButton.className = 'addButton';
+            addButton.onclick = function() {
+                addToFav();
+            };
+            item.appendChild(addButton);
             if (data.list[i].username !== userName) {
                 item.onclick = function () {
                     startChat(this.id);
