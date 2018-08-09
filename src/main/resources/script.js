@@ -422,7 +422,8 @@ function addToFav() {
         }
     }
     var li = document.createElement('li');
-    li.innerHTML = id(clickedEl).innerHTML;
+    li.className = 'con-usr';
+    li.innerHTML = id(clickedEl).textContent.substring(1, id(clickedEl).textContent.length);
     id('con-list').appendChild(li);
     currentContacts.push(li.innerHTML);
 }

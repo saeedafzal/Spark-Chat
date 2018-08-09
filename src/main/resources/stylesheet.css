@@ -140,6 +140,16 @@ body {
     background: linear-gradient(to bottom, #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%);
 }
 
+.con-usr {
+    border: 1px solid white;
+    width: 50%;
+    height: 5vh;
+    font-size: 30px;
+    margin-left: 25%;
+    padding-top: 20px;
+    background: linear-gradient(to bottom, #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%);
+}
+
 .searchUsr:hover {
     background: linear-gradient(to bottom, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
 }
@@ -386,5 +396,5 @@ ul {
 
 .addButton {
     position: absolute;
-    left: 65%;
+    left: 62%;
 }
