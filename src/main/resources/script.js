@@ -191,6 +191,12 @@ function updateScreen(msg) {
                 window.event.returnValue = false;
                 e.preventDefault();
             });
+			var plusBtn = document.createElement('button');
+			plusBtn.innerHTML = '+';
+			plusBtn.onclick = function() {
+				addToFav(this.parentNode.textContent.substr(1));
+			}
+			item.appendChild(plusBtn);
             if (data.list[i].username !== userName) {
                 item.onclick = function () {
                     startChat(this.id);
@@ -407,15 +413,15 @@ function scrollToBottom() {
     id('chat').scrollTop = id('chat').scrollHeight;
 }
 
-function addToFav() {
+function addToFav(e) {
     for (var i = 0; i < currentContacts.length; i++) {
-        if (currentContacts[i] === id(clickedEl).innerHTML) {
+        if (currentContacts[i] === e) {
             alert("User added already!");
             return;
         }
     }
     var li = document.createElement('li');
-    li.innerHTML = id(clickedEl).innerHTML;
+    li.innerHTML = e;
     id('con-list').appendChild(li);
     currentContacts.push(li.innerHTML);
 }
