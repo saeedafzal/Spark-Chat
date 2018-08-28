@@ -175,42 +175,37 @@ function updateScreen(msg) {
         id('usrList').innerHTML = "";
         for (var i = 0; i < data.list.length; i++) {
             var item = document.createElement('li');
-            item.setAttribute('id', 'li' + i);
-            item.setAttribute('class', 'searchUsr');
-            item.onclick = function () {
-                focusCss(this.id);
-            };
-            item.onclick = function () {
+            var avatarDiv = document.createElement('div');
+            avatarDiv.className = 'avatDiv';
+            var infoDiv = document.createElement('div');
+            infoDiv.className = 'infoDiv';
+            infoDiv.id = 'li' + i;
+            infoDiv.onclick = function() {
                 startChat(this.id);
             };
-            item.addEventListener('contextmenu', function (e) {
-                clickedEl = this.id;
-                id("rmenu").className = "show";
-                id("rmenu").style.top = mouseY(event) + "px";
-                id("rmenu").style.left = mouseX(event) + "px";
-                window.event.returnValue = false;
-                e.preventDefault();
-            });
-			var plusBtn = document.createElement('button');
-			plusBtn.innerHTML = '+';
-			plusBtn.onclick = function() {
-				addToFav(this.parentNode.textContent.substr(1));
-			}
-			item.appendChild(plusBtn);
+            var addDiv = document.createElement('div');
+            addDiv.className = 'addDiv';
+            addDiv.innerHTML = '+';
+            addDiv.onclick = function() {
+                addToFav(this.parentNode.children[1].innerHTML.substring(0, this.parentNode.children[1].innerHTML.indexOf('<')));
+            };
+            
+            item.className = 'searchUsr';
             if (data.list[i].username !== userName) {
-                item.onclick = function () {
-                    startChat(this.id);
-                };
-                item.appendChild(document.createTextNode(data.list[i].username));
-                //assign colour
-                if (data.list[i].status === "ONLINE") {
-                    item.style.color = "green";
-                    console.log(item);
+                infoDiv.innerHTML = data.list[i].username;
+                if (data.list[i].status === 'ONLINE') {
+                    infoDiv.innerHTML += '</br>ONLINE';
+                    infoDiv.style.color = 'green';
                 } else {
-                    item.style.color = "red";
-                    console.log(item);
+                    infoDiv.innerHTML += '</br>OFFLINE';
+                    infoDiv.style.color = 'red';
                 }
             } else continue;
+            
+            item.appendChild(avatarDiv);
+            item.appendChild(infoDiv);
+            item.appendChild(addDiv);
+            
             id('usrList').appendChild(item);
         }
     } else if (data.key === "message") {
@@ -350,13 +345,17 @@ function colorPick(sender) {
 }
 
 function startChat(item) {
-    if (id(id(item).textContent)) id(id(item).textContent).style.display = 'none';
+    if (id(id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<')))) {
+        id(id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<'))).style.display = 'none';
+    }
     var color = window.getComputedStyle(id(item)).getPropertyValue('color');
     if (color === "rgb(0, 128, 0)") { //online
-        recipientName = id(item).textContent;
+        recipientName = id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<'));
         readMessage();
     }
 }
+
+//this.parentNode.children[1].innerHTML
 
 //helper classes
 function id(id) {
