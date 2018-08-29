@@ -360,19 +360,12 @@ function search() {
     ul = id('usrList');
     li = ul.getElementsByTagName('li');
 
-    /*for (var i = 0; i < li.length; i++) {
+    for (var i = 0; i < li.length; i++) {
         a = li[i];
         console.log("Item in list: " + a.innerHTML);
         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
         else li[i].style.display = "none";
-    }*/
-
-    li.forEach(e => {
-        a = e;
-        console.log("Item in list: " + a.innerHTML);
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) e.style.display = "";
-        else e.style.display = "none";
-    });
+    }
 }
 
 function scrollToBottom() {
