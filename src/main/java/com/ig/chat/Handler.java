@@ -35,7 +35,7 @@ public class Handler {
         sessions.add(session);
         session.setIdleTimeout(28800000);
 
-        for (Account acc : Server.userList) {
+        /*for (Account acc : Server.userList) {
             for (Account a : onlineUsers.keySet()) {
                 if (acc.getUsername().equals(a.getUsername())) {
                     acc.setStatus("ONLINE");
@@ -43,7 +43,17 @@ public class Handler {
                 }
             }
             if (acc.getStatus() == null || !acc.getStatus().equals("ONLINE")) acc.setStatus("OFFLINE");
-        }
+        }*/
+
+        Server.userList.forEach(e -> {
+            for (Account a : onlineUsers.keySet()) {
+                if (e.getUsername().equals(a.getUsername())) {
+                    e.setStatus("ONLINE");
+                    break;
+                }
+            }
+            if (e.getStatus() == null || !e.getStatus().equals("ONLINE")) e.setStatus("OFFLINE");
+        });
 
         broadcast();
     }

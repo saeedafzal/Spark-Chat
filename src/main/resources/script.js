@@ -3,7 +3,6 @@ var userName;
 var recipientName;
 var ws;
 var chats = {};
-var clickedEl;
 var currentContacts = [];
 
 //hide divs
@@ -13,10 +12,6 @@ id('chatScreen').style.display = 'none';
 id('createAcc').style.display = 'none';
 id('loginField').value = localStorage.getItem("username");
 id('passField').value = localStorage.getItem("password");
-
-document.addEventListener("click", function () {
-    document.getElementById("rmenu").className = "hide";
-});
 
 //http requests
 function login() {
@@ -44,7 +39,6 @@ function login() {
                 document.body.style.background = '';
                 document.title = 'Contacts';
                 startSocket();
-                // userList();
                 alert("LOGGED IN!");
             } else alert(json.message);
         }
@@ -269,30 +263,6 @@ function userListPending(e) {
     }
 }
 
-function mouseX(evt) {
-    if (evt.pageX) {
-        return evt.pageX;
-    } else if (evt.clientX) {
-        return evt.clientX + (document.documentElement.scrollLeft ?
-            document.documentElement.scrollLeft :
-            document.body.scrollLeft);
-    } else {
-        return null;
-    }
-}
-
-function mouseY(evt) {
-    if (evt.pageY) {
-        return evt.pageY;
-    } else if (evt.clientY) {
-        return evt.clientY + (document.documentElement.scrollTop ?
-            document.documentElement.scrollTop :
-            document.body.scrollTop);
-    } else {
-        return null;
-    }
-}
-
 function insert(targetID, message) {
     var colour = colorPick(message.sender);
     var list = id('msgList');
@@ -355,8 +325,6 @@ function startChat(item) {
     }
 }
 
-//this.parentNode.children[1].innerHTML
-
 //helper classes
 function id(id) {
     return document.getElementById(id);
@@ -364,14 +332,6 @@ function id(id) {
 
 function isHidden(el) {
     return (el.offsetParent === null);
-}
-
-/*function ignoreMessage() {
-    id('notif').style.display = 'none';
-}*/
-
-function focusCss() {
-
 }
 
 function readMessage() {
@@ -400,12 +360,19 @@ function search() {
     ul = id('usrList');
     li = ul.getElementsByTagName('li');
 
-    for (var i = 0; i < li.length; i++) {
+    /*for (var i = 0; i < li.length; i++) {
         a = li[i];
         console.log("Item in list: " + a.innerHTML);
         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
         else li[i].style.display = "none";
-    }
+    }*/
+
+    li.forEach(e => {
+        a = e;
+        console.log("Item in list: " + a.innerHTML);
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) e.style.display = "";
+        else e.style.display = "none";
+    });
 }
 
 function scrollToBottom() {
@@ -423,10 +390,6 @@ function addToFav(e) {
     li.innerHTML = e;
     id('con-list').appendChild(li);
     currentContacts.push(li.innerHTML);
-}
-
-function hideContext() {
-    id('rmenu').className = 'hide';
 }
 
 //contacts list functions

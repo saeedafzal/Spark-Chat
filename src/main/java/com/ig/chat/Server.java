@@ -53,7 +53,10 @@ public class Server {
             if (exists) {
                 if (!(onlineList.size() < 1)) {
                     for (Account acc : onlineList) {
-                        if (acc.getUsername().equals(account.getUsername())) online = true;
+                        if (acc.getUsername().equals(account.getUsername())) {
+                            online = true;
+                            break;
+                        }
                     }
                 }
             } else {
