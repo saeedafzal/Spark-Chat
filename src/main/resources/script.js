@@ -4,6 +4,11 @@ var recipientName;
 var ws;
 var chats = {};
 var currentContacts = [];
+var liEls = {};
+var allContacts = [];
+var favContacts = [];
+var contactObj = {};
+var searchList = [];
 
 //hide divs
 id('con').style.display = 'none';
@@ -166,8 +171,7 @@ function updateScreen(msg) {
     //data has 'key' determining type of message
 
     if (data.key === "userlist") {  //update contacts with user list
-        id('usrList').innerHTML = "";
-        for (var i = 0; i < data.list.length; i++) {
+        /*for (var i = 0; i < data.list.length; i++) {
             var item = document.createElement('li');
             var avatarDiv = document.createElement('div');
             avatarDiv.className = 'avatDiv';
@@ -181,7 +185,8 @@ function updateScreen(msg) {
             addDiv.className = 'addDiv';
             addDiv.innerHTML = '+';
             addDiv.onclick = function() {
-                addToFav(this.parentNode.children[1].innerHTML.substring(0, this.parentNode.children[1].innerHTML.indexOf('<')));
+                addToFav(this.parentNode.children[1]
+                    .innerHTML.substring(0, this.parentNode.children[1].innerHTML.indexOf('<')));
             };
             
             item.className = 'searchUsr';
@@ -199,9 +204,11 @@ function updateScreen(msg) {
             item.appendChild(avatarDiv);
             item.appendChild(infoDiv);
             item.appendChild(addDiv);
-            
-            id('usrList').appendChild(item);
+
+            liEls[data.list[i].username] = item;
         }
+        updateContacts();*/
+        updateContactList(data);
     } else if (data.key === "message") {
         if (data.sender === userName) { // Display own message
             recipientName = data.receiver;
@@ -224,11 +231,19 @@ function updateScreen(msg) {
                 recipientName = data.sender;
                 if (id('talkingTo').innerHTML === data.sender) { // Chat screen with sender
                     if (!chats.hasOwnProperty(userName + data.sender)) chats[userName + data.sender] = [];
-                    chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                    chats[userName + recipientName].push({
+                        sender: data.sender,
+                        message: data.msg.message,
+                        time: data.time
+                    });
                     insert("chat", {sender: data.sender, message: data.msg.message, time: data.time});
                 } else { // Chat screen with someone else
                     if (!chats.hasOwnProperty(userName + data.sender)) chats[userName + data.sender] = [];
-                    chats[userName + recipientName].push({sender: data.sender, message: data.msg.message, time: data.time});
+                    chats[userName + recipientName].push({
+                        sender: data.sender,
+                        message: data.msg.message,
+                        time: data.time
+                    });
                     var liList = document.getElementsByClassName('searchUsr');
                     for (var i = 0; i < liList.length; i++) {
                         if (liList[i].textContent === data.sender) {
@@ -245,12 +260,71 @@ function updateScreen(msg) {
 function notify(sender) {
     Notification.permission = undefined;
     if (window.Notification && Notification.permission !== "denied") {
-        Notification.requestPermission(function() {  // status is "granted", if accepted by user
+        Notification.requestPermission(function () {  // status is "granted", if accepted by user
             new Notification('New Message Received', {
                 body: 'Received message from ' + sender
             });
         });
     }
+}
+
+function updateContactList(data) {
+    allContacts = [];
+    allContacts = data.list;
+    for (var i = 0; i < allContacts.length; i++) {
+
+        var li = document.createElement('li');
+
+        var infoDiv = document.createElement('div');
+        infoDiv.className = 'infoDiv';
+        infoDiv.id = 'li' + i;
+        infoDiv.onclick = function () {
+            startChat(this.id);
+        };
+
+        var div1 = document.createElement('div');
+        div1.innerHTML = data.list[i].username;
+
+        var div2 = document.createElement('div');
+        if (data.list[i].username !== userName) {
+            if (data.list[i].status === 'ONLINE') {
+                div2.innerHTML = 'ONLINE';
+            } else {
+                div2.innerHTML = 'OFFLINE';
+            }
+        } else continue;
+
+        infoDiv.appendChild(div1);
+        infoDiv.appendChild(div2);
+
+        if (favContacts.includes(data.list[i].username)) {
+            var addDiv = document.createElement('div');
+            addDiv.className = 'addDiv';
+            addDiv.innerHTML = '-';
+            addDiv.onclick = function () {
+            };
+
+            li.appendChild(infoDiv);
+            li.appendChild(addDiv);
+
+            favContacts.push(data.list[i].username);
+            contactObj[data.list[i].username] = li;
+        } else {
+            var addDiv = document.createElement('div');
+            addDiv.className = 'addDiv';
+            addDiv.innerHTML = '+';
+            addDiv.onclick = function () {
+                addToFav(this.parentNode.children[1].children[0].innerHTML, this.parentNode);
+            };
+
+            li.appendChild(infoDiv);
+            li.appendChild(addDiv);
+
+            searchList.push(li);
+        }
+    }
+
+    updateList();
 }
 
 function userListPending(e) {
@@ -315,12 +389,11 @@ function colorPick(sender) {
 }
 
 function startChat(item) {
-    if (id(id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<')))) {
+    /*if (id(id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<')))) {
         id(id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<'))).style.display = 'none';
-    }
+    }*/
     var color = window.getComputedStyle(id(item)).getPropertyValue('color');
-    if (color === "rgb(0, 128, 0)") { //online
-        recipientName = id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<'));
+    if (id(item).children[1].innerHTML == 'ONLINE') { //online
         readMessage();
     }
 }
@@ -372,17 +445,103 @@ function scrollToBottom() {
     id('chat').scrollTop = id('chat').scrollHeight;
 }
 
-function addToFav(e) {
-    for (var i = 0; i < currentContacts.length; i++) {
+function addToFav(e, li) {
+    /*for (var i = 0; i < currentContacts.length; i++) {
         if (currentContacts[i] === e) {
             alert("User added already!");
             return;
         }
     }
-    var li = document.createElement('li');
+    /!*var li = document.createElement('li');
+    var avDiv = document.createElement('div');
+    avDiv.className = 'avatDiv';
+    var infoDiv = document.createElement('div');
+    infoDiv.className = 'infoDiv';
     li.innerHTML = e;
     id('con-list').appendChild(li);
-    currentContacts.push(li.innerHTML);
+    currentContacts.push(li.innerHTML);*!/
+
+    currentContacts.push(e);
+    var li = liEls[e];
+    alterEls(li);
+    updateContacts();*/
+
+    if (li.children[2].innerHTML == '+') {
+        favContacts.push(e);
+        for (var i = 0; i < searchList.length; i++) {
+            if (searchList[i] == li) {
+                searchList.splice(i, 1);
+            }
+        }
+        contactObj[e] = li;
+    } else {
+        for (var name in contactObj) {
+            for (var i = 0; i < favContacts.length; i++) {
+                if (favContacts[i] == name) {
+                    favContacts.splice(i, 1);
+                    contactObj[name].remove();
+                    searchList.push(li);
+                }
+            }
+        }
+    }
+    updateList();
+}
+
+function updateContacts() {
+    id('con-list').innerHTML = '';
+    id('usrList').innerHTML = '';
+    var added;
+    for (var name in liEls) {
+        added = false;
+        if (!liEls.hasOwnProperty(name)) continue;
+        for (var i = 0; i < currentContacts.length; i++) {
+            if (currentContacts[i] === name) {
+                id('con-list').appendChild(liEls[name]);
+                added = true;
+            }
+        }
+        if (!added) {
+            liEls[name].children[2].innerHTML = '+';
+            liEls[name].children[2].onclick = function () {
+                // addToFav(this.parentNode.children[1].innerHTML.substring(0, this.parentNode.children[1].innerHTML.indexOf('<')));
+            };
+            id('usrList').appendChild(liEls[name]);
+        }
+    }
+}
+
+function updateList() {
+    id('usrList').innerHTML = '';
+    id('con-list').innerHTML = '';
+    for (var i = 0; i < searchList.length; i++) {
+        id('usrList').appendChild(searchList[i]);
+    }
+    for (var name in contactObj) {
+        for (var i = 0; i < favContacts.length; i++) {
+            if (favContacts[i] == name) {
+                contactObj[name].children[2].innerHTML = '-';
+                id('con-list').appendChild(contactObj[name]);
+            }
+        }
+    }
+}
+
+function alterEls(li) {
+    li.children[2].innerHTML = '-';
+
+    li.children[2].onclick = function () {
+        removeFromContacts(li);
+    };
+}
+
+function removeFromContacts(e) {
+    currentContacts = remove(currentContacts, e.children[1].innerHTML.substring(0, e.children[1].innerHTML.indexOf('<')));
+    updateContacts();
+}
+
+function remove(array, element) {
+    return array.filter(e => e !== element);
 }
 
 //contacts list functions

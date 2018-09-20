@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static spark.Spark.before;
+import static spark.Spark.get;
 import static spark.Spark.options;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
@@ -75,6 +76,11 @@ public class Server {
                 response.setStatus(false);
                 return gson.toJson(response);
             }
+        });
+
+        get("/test", (req, res) -> {
+            LOG.info("Testing...");
+            return "Works";
         });
 
         post("/logout", (req, res) -> {

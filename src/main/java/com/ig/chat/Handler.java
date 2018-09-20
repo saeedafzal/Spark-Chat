@@ -35,16 +35,6 @@ public class Handler {
         sessions.add(session);
         session.setIdleTimeout(28800000);
 
-        /*for (Account acc : Server.userList) {
-            for (Account a : onlineUsers.keySet()) {
-                if (acc.getUsername().equals(a.getUsername())) {
-                    acc.setStatus("ONLINE");
-                    break;
-                }
-            }
-            if (acc.getStatus() == null || !acc.getStatus().equals("ONLINE")) acc.setStatus("OFFLINE");
-        }*/
-
         Server.userList.forEach(e -> {
             for (Account a : onlineUsers.keySet()) {
                 if (e.getUsername().equals(a.getUsername())) {
@@ -89,13 +79,16 @@ public class Handler {
                     session.getRemote().sendString(gson.toJson(msg));
                 } else {
                     final MessageJson mj = new MessageJson("message", msg, msg.getSender(), msg.getReceiver(), getTime());
+                    LOG.debug("Time of Message: ", getTime());
                     receiverSession.getRemote().sendString(gson.toJson(mj));
                     session.getRemote().sendString(gson.toJson(mj));
                 }
             } catch (IOException io) {
                 LOG.error("Failed to send message!", io);
             }
-        } else LOG.info("{}", message);
+        } else {
+            broadcast();
+        }
     }
 
     Session getReceiverSession(Message msg) {
