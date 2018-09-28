@@ -269,8 +269,10 @@ function notify(sender) {
 }
 
 function updateContactList(data) {
+
     allContacts = [];
     allContacts = data.list;
+    searchList = [];
     for (var i = 0; i < allContacts.length; i++) {
 
         var li = document.createElement('li');
@@ -302,6 +304,7 @@ function updateContactList(data) {
             addDiv.className = 'addDiv';
             addDiv.innerHTML = '-';
             addDiv.onclick = function () {
+                addToFav(this.parentNode.children[0].children[0].innerHTML, this.parentNode);
             };
 
             li.appendChild(infoDiv);
@@ -314,7 +317,7 @@ function updateContactList(data) {
             addDiv.className = 'addDiv';
             addDiv.innerHTML = '+';
             addDiv.onclick = function () {
-                addToFav(this.parentNode.children[1].children[0].innerHTML, this.parentNode);
+                addToFav(this.parentNode.children[0].children[0].innerHTML, this.parentNode);
             };
 
             li.appendChild(infoDiv);
@@ -392,8 +395,9 @@ function startChat(item) {
     /*if (id(id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<')))) {
         id(id(item).innerHTML.substring(0, id(item).innerHTML.indexOf('<'))).style.display = 'none';
     }*/
-    var color = window.getComputedStyle(id(item)).getPropertyValue('color');
+
     if (id(item).children[1].innerHTML == 'ONLINE') { //online
+        recipientName = id(item).children[0].innerHTML;
         readMessage();
     }
 }
@@ -465,8 +469,9 @@ function addToFav(e, li) {
     var li = liEls[e];
     alterEls(li);
     updateContacts();*/
+    var removed = false;
 
-    if (li.children[2].innerHTML == '+') {
+    if (li.children[1].innerHTML == '+') {
         favContacts.push(e);
         for (var i = 0; i < searchList.length; i++) {
             if (searchList[i] == li) {
@@ -476,13 +481,17 @@ function addToFav(e, li) {
         contactObj[e] = li;
     } else {
         for (var name in contactObj) {
+            removed = false;
             for (var i = 0; i < favContacts.length; i++) {
                 if (favContacts[i] == name) {
                     favContacts.splice(i, 1);
                     contactObj[name].remove();
+                    removed = true;
                     searchList.push(li);
+                    break;
                 }
             }
+            if (removed) break;
         }
     }
     updateList();
@@ -502,8 +511,8 @@ function updateContacts() {
             }
         }
         if (!added) {
-            liEls[name].children[2].innerHTML = '+';
-            liEls[name].children[2].onclick = function () {
+            liEls[name].children[1].innerHTML = '+';
+            liEls[name].children[1].onclick = function () {
                 // addToFav(this.parentNode.children[1].innerHTML.substring(0, this.parentNode.children[1].innerHTML.indexOf('<')));
             };
             id('usrList').appendChild(liEls[name]);
@@ -515,29 +524,17 @@ function updateList() {
     id('usrList').innerHTML = '';
     id('con-list').innerHTML = '';
     for (var i = 0; i < searchList.length; i++) {
+        searchList[i].children[1].innerHTML = '+';
         id('usrList').appendChild(searchList[i]);
     }
     for (var name in contactObj) {
         for (var i = 0; i < favContacts.length; i++) {
             if (favContacts[i] == name) {
-                contactObj[name].children[2].innerHTML = '-';
+                contactObj[name].children[1].innerHTML = '-';
                 id('con-list').appendChild(contactObj[name]);
             }
         }
     }
-}
-
-function alterEls(li) {
-    li.children[2].innerHTML = '-';
-
-    li.children[2].onclick = function () {
-        removeFromContacts(li);
-    };
-}
-
-function removeFromContacts(e) {
-    currentContacts = remove(currentContacts, e.children[1].innerHTML.substring(0, e.children[1].innerHTML.indexOf('<')));
-    updateContacts();
 }
 
 function remove(array, element) {
