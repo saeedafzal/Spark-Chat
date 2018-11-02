@@ -1,7 +1,8 @@
 package com.ig.chat.model;
 
 public class Account {
-    private String username, password, status;
+
+    private String username, password;
 
     public Account(String username, String password) {
         this.username = username;
@@ -16,11 +17,11 @@ public class Account {
         return password;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
+    @Override
+    public String toString() {
+        return "Account{" +
+                "\nusername='" + username + '\'' +
+                ", \npassword='" + password + '\'' +
+                '}';
     }
 }
