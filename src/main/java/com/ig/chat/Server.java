@@ -17,7 +17,7 @@ public class Server {
     private final Login login;
 
     private Server() {
-        this.login = new Login();
+        this.login = Login.getInstance();
         login.addUser(new Account("Bob", "bob"));
         login.addUser(new Account("Jack", "jack"));
         login.addUser(new Account("Giant", "giant"));
@@ -26,7 +26,7 @@ public class Server {
     private void start() {
         // Login
         post("/login", (req, res) -> {
-            LOG.info("Server: [Received new message: {}]", req.body());
+            LOG.info("Server: [Received login request: {}]", req.body());
             final Account account = gson.fromJson(req.body(), Account.class);
             LOG.info("Account: {}", account);
 
@@ -36,6 +36,12 @@ public class Server {
                 LOG.error("Failed to login: {}", e.getMessage(), e);
                 return gson.toJson(new Response(false, e.getMessage()));
             }
+        });
+
+        // Create Account
+        post("/create", (req, res) -> {
+            LOG.info("Server: Received create account request: {}", req.body());
+            return null;
         });
     }
 

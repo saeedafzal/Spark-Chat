@@ -12,8 +12,14 @@ import java.util.List;
 class Login {
 
     private static final Logger LOG = LoggerFactory.getLogger(Login.class);
-    private List<Account> userList = new ArrayList<>();
+    private static Login login_instance = null;
     private List<Account> onlineUsers = new ArrayList<>();
+    private List<Account> userList = new ArrayList<>();
+
+    static Login getInstance() {
+        if (login_instance == null) login_instance = new Login();
+        return login_instance;
+    }
 
     /**
      * Attempts to log in the specified user and fails if it cannot login.
@@ -22,8 +28,8 @@ class Login {
      * @throws LoginException If login fails.
      */
     Response login(Account account) throws LoginException {
+        // Check if username exists.
         for (Account userListAccount : userList) {
-            // Check if username exists.
             if (account.getUsername().equals(userListAccount.getUsername())) {
                 LOG.info("User exists.");
                 // Check if user is not online
@@ -51,11 +57,29 @@ class Login {
         throw new LoginException("User does not exist.");
     }
 
+    Response createAccount(String username, String password) throws LoginException {
+        // Check if username already exists
+        for (Account userListAccount : userList) {
+            if (username.equals(userListAccount.getUsername())) {
+                // Username exists
+                LOG.warn("User already exists.");
+                throw new LoginException("User already exists.");
+            }
+        }
+
+        userList.add(new Account(username, password));
+        return new Response(true, "Created account.");
+    }
+
     void addUser(Account account) {
         userList.add(account);
     }
 
     List<Account> getOnlineUsers() {
         return onlineUsers;
+    }
+
+    List<Account> getUserList() {
+        return userList;
     }
 }
