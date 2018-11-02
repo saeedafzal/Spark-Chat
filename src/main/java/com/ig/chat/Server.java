@@ -34,7 +34,7 @@ public class Server {
                 return gson.toJson(login.login(account));
             } catch (LoginException e) {
                 LOG.error("Failed to login: {}", e.getMessage(), e);
-                return new Response(false, "Failed to login.");
+                return gson.toJson(new Response(false, e.getMessage()));
             }
         });
     }
@@ -43,9 +43,11 @@ public class Server {
     private static void enableCORS() {
         options("/*", (request, response) -> {
             final String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
-            if (accessControlRequestHeaders != null) response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            if (accessControlRequestHeaders != null)
+                response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
             final String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
-            if (accessControlRequestMethod != null) response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+            if (accessControlRequestMethod != null)
+                response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
             return "OK";
         });
 
