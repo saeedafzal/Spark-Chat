@@ -5,9 +5,8 @@ import com.ig.chat.model.LoginException;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class LoginTest {
 
@@ -16,9 +15,6 @@ public class LoginTest {
     @Before
     public void setup() {
         login = new Login();
-        login.addUser(new Account("Bob", "bob"));
-        login.addUser(new Account("Jack", "jack"));
-        login.addUser(new Account("Giant", "giant"));
     }
 
     @Test

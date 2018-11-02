@@ -9,13 +9,19 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Login {
+class Login {
 
     private static final Logger LOG = LoggerFactory.getLogger(Login.class);
     private List<Account> userList = new ArrayList<>();
     private List<Account> onlineUsers = new ArrayList<>();
 
-    public Response login(Account account) throws LoginException {
+    /**
+     * Attempts to log in the specified user and fails if it cannot login.
+     * @param account The account to be logged in.
+     * @return A response to the login request (whether it passed or failed)
+     * @throws LoginException If login fails.
+     */
+    Response login(Account account) throws LoginException {
         for (Account userListAccount : userList) {
             // Check if username exists.
             if (account.getUsername().equals(userListAccount.getUsername())) {
@@ -45,11 +51,11 @@ public class Login {
         throw new LoginException("User does not exist.");
     }
 
-    public void addUser(Account account) {
+    void addUser(Account account) {
         userList.add(account);
     }
 
-    public List<Account> getOnlineUsers() {
+    List<Account> getOnlineUsers() {
         return onlineUsers;
     }
 }

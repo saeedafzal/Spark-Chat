@@ -19,9 +19,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "\nusername='" + username + '\'' +
-                ", \npassword='" + password + '\'' +
-                '}';
+        return "\nAccount: " + "\n\tusername='" + username + '\'' + ", \n\tpassword='" + password + '\'';
     }
 }

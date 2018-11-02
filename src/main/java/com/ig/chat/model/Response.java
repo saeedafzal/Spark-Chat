@@ -10,19 +10,8 @@ public class Response {
         this.message = message;
     }
 
-    public void setKey(boolean key) {
-        this.key = key;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     @Override
     public String toString() {
-        return "Response{" +
-                "\nkey=" + key +
-                ", \nmessage='" + message + '\'' +
-                '}';
+        return "Response:" + "\n\tkey=" + key + ", \n\tmessage='" + message + '\'';
     }
 }

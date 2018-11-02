@@ -1,5 +1,10 @@
 package com.ig.chat;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.ig.chat.model.Account;
+import com.ig.chat.model.LoginException;
+import com.ig.chat.model.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,17 +13,29 @@ import static spark.Spark.*;
 public class Server {
 
     private static final Logger LOG = LoggerFactory.getLogger(Server.class);
-    private Login login;
+    private Gson gson = new GsonBuilder().create();
+    private final Login login;
 
     private Server() {
         this.login = new Login();
+        login.addUser(new Account("Bob", "bob"));
+        login.addUser(new Account("Jack", "jack"));
+        login.addUser(new Account("Giant", "giant"));
     }
 
     private void start() {
+        // Login
         post("/login", (req, res) -> {
-            LOG.info("Login Request Received");
-            
-            return "Hello World";
+            LOG.info("Server: [Received new message: {}]", req.body());
+            final Account account = gson.fromJson(req.body(), Account.class);
+            LOG.info("Account: {}", account);
+
+            try {
+                return gson.toJson(login.login(account));
+            } catch (LoginException e) {
+                LOG.error("Failed to login: {}", e.getMessage(), e);
+                return new Response(false, "Failed to login.");
+            }
         });
     }
 
