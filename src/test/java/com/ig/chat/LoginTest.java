@@ -15,6 +15,9 @@ public class LoginTest {
     @Before
     public void setup() {
         login = new Login();
+        login.addUser(new Account("Bob", "bob"));
+        login.addUser(new Account("Jack", "jack"));
+        login.addUser(new Account("Giant", "giant"));
     }
 
     @Test
