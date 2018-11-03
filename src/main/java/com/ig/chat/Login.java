@@ -67,6 +67,7 @@ class Login {
             }
         }
 
+        LOG.info("Created user: {}", username);
         userList.add(new Account(username, password));
         return new Response(true, "Created account.");
     }

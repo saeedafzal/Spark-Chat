@@ -41,7 +41,14 @@ public class Server {
         // Create Account
         post("/create", (req, res) -> {
             LOG.info("Server: Received create account request: {}", req.body());
-            return null;
+            final Account account = gson.fromJson(req.body(), Account.class);            
+            
+            try {
+            	return gson.toJson(login.createAccount(account.getUsername(), account.getPassword()));
+            } catch (LoginException e) {
+            	LOG.error("Failed to create account: {}", e.getMessage(), e);
+            	return gson.toJson(new Response(false, e.getMessage()));
+            }
         });
     }
 
