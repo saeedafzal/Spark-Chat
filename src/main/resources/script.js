@@ -23,6 +23,8 @@ function login() {
 
             if (data.status) {
                 logger.innerHTML += data.message + "<br>";
+                id("login_screen").style.display = "none";
+                id("contact_screen").style.display = "block";
             } else logger.innerHTML += data.message + "<br>";
         } else {
             logger.innerHTML += "Error: " + xhr.status + " code. Please check server.<br>"
