@@ -73,6 +73,7 @@ public class Server {
 
     public static void main(String[] args) {
         staticFileLocation("/public");
+        webSocket("/chat", Handler.class);
         enableCORS();
         new Server().start();
     }

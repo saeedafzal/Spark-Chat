@@ -3,6 +3,7 @@ package com.ig.chat;
 import com.ig.chat.model.Account;
 import com.ig.chat.model.LoginException;
 import com.ig.chat.model.Response;
+import com.ig.chat.model.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,7 @@ class Login {
                 // Check if password matches
                 if (account.getPassword().equals(userListAccount.getPassword())) {
                     LOG.info("User logged in.");
+                    account.setStatus(Status.OFFLINE);
                     onlineUsers.add(account);
                     return new Response(true, "User logged in.");
                 } else {

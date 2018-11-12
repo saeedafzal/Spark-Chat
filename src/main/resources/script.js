@@ -25,6 +25,7 @@ function login() {
                 logger.innerHTML += data.message + "<br>";
                 id("login_screen").style.display = "none";
                 id("contact_screen").style.display = "block";
+                socketConnect();
             } else logger.innerHTML += data.message + "<br>";
         } else {
             logger.innerHTML += "Error: " + xhr.status + " code. Please check server.<br>"
@@ -64,6 +65,21 @@ function createAccount() {
 	};
 	var account = JSON.stringify({username: username_create, password: password_create});
 	xhr.send(account);
+}
+
+// Websocket connection
+function socketConnect() {
+    var ws = new WebSocket("ws://localhost:4567/chat");
+
+    ws.onmessage = function(msg) {
+        logger.innerHTML += "Received message: [" + msg + "]<br>";
+        console.log(msg);
+        updateScreen(msg);
+    };
+}
+
+function updateScreen(msg) {
+    
 }
 
 // Switch screen functions
