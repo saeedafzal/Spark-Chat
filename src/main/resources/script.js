@@ -21,13 +21,13 @@ function login() {
             var data = JSON.parse(xhr.responseText);
             console.log("Received data: " + data);
 
-            if (data.status) {
+            if (data.key) {
                 logger.innerHTML += data.message + "<br>";
                 id("login_screen").style.display = "none";
                 id("contact_screen").style.display = "block";
                 socketConnect();
             } else logger.innerHTML += data.message + "<br>";
-        } else {
+        } else if (xhr.status !== 200) {
             logger.innerHTML += "Error: " + xhr.status + " code. Please check server.<br>"
         }
     };
@@ -72,14 +72,15 @@ function socketConnect() {
     var ws = new WebSocket("ws://localhost:4567/chat");
 
     ws.onmessage = function(msg) {
-        logger.innerHTML += "Received message: [" + msg + "]<br>";
+        logger.innerHTML += "Received message: [" + msg.value + "]<br>";
         console.log(msg);
+        console.log(msg.key + "|" + msg.value);
         updateScreen(msg);
     };
 }
 
 function updateScreen(msg) {
-    
+
 }
 
 // Switch screen functions
