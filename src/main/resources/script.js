@@ -1,8 +1,10 @@
-var username;
-var logger = id("logger");
-id("create_screen").style.display = "none";
+var username; // The current user's username.
+var logger = id("logger"); // The DOM element where everything is logged.
 
+// HTTP Requests
+// Login function + start websocket
 function login() {
+    logger.innerHTML = "Login attempt...<br>";
     username = id("username_input").value;
     var password = id("password_input").value;
 
@@ -22,12 +24,15 @@ function login() {
             if (data.status) {
                 logger.innerHTML += data.message + "<br>";
             } else logger.innerHTML += data.message + "<br>";
+        } else {
+            logger.innerHTML += "Error: " + xhr.status + " code. Please check server.<br>"
         }
     };
     var account = JSON.stringify({username: username, password: password});
     xhr.send(account);
 }
 
+// Create account function
 function createAccount() {
 	var username_create = id("username_create").value;
 	var password_create = id("password_create").value;
@@ -59,11 +64,18 @@ function createAccount() {
 	xhr.send(account);
 }
 
+// Switch screen functions
 function displayCreateAccount() {
 	id("login_screen").style.display = "none";
 	id("create_screen").style.display = "block";
 }
 
+function backToLogin() {
+    id("create_screen").style.display = "none";
+    id("login_screen").style.display = "block";
+}
+
+// Helper functions
 function id(id) {
     return document.getElementById(id);
 }

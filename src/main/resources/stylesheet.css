@@ -1,0 +1,12 @@
+#logger {
+    border: 1px solid black;
+    height: 250px;
+    width: 500px;
+    position: fixed;
+    left: 65%;
+    top: 60%;
+}
+
+#create_screen {
+    display: none;
+}

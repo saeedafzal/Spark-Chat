@@ -23,9 +23,6 @@ class Login {
 
     /**
      * Attempts to log in the specified user and fails if it cannot login.
-     * @param account The account to be logged in.
-     * @return A response to the login request (whether it passed or failed)
-     * @throws LoginException If login fails.
      */
     Response login(Account account) throws LoginException {
         // Check if username exists.
@@ -57,6 +54,9 @@ class Login {
         throw new LoginException("User does not exist.");
     }
 
+    /**
+     * Attempts to create a new account and fails if it cannot create.
+     */
     Response createAccount(String username, String password) throws LoginException {
         // Check if username already exists
         for (Account userListAccount : userList) {
@@ -72,6 +72,10 @@ class Login {
         return new Response(true, "Created account.");
     }
 
+    /**
+     * Adds a user to the user list. Will add users with same name, so checks need to be done before.
+     * @param account The account to be added.
+     */
     void addUser(Account account) {
         userList.add(account);
     }
