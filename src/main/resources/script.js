@@ -1,6 +1,8 @@
 var username; // The current user's username.
+var receiver; // The user to receive messages
 var logger = id("logger"); // The DOM element where everything is logged.
 var ws; // Websocket
+var chatHistory = {};
 
 // HTTP Requests
 // Login function + start websocket
@@ -109,6 +111,23 @@ function socketConnect() {
 
     ws.onclose = function() {
         logger.innerHTML += "Connection closed.<br>";
+    };
+
+    id("chat_send").addEventListener("click", () => {
+        sendMessage(id("chat_input").value);
+    });
+
+    id("chat_input").addEventListener("keypress", (e) => {
+        if (e.keyCode === 13) sendMessage(e.target.value);
+    });
+}
+
+function sendMessage(message) {
+    if (message !== "") {
+        ws.send(JSON.stringify(
+            {sender: username, recipient: receiver, message: message}
+        ));
+        id("chat_input").value = "";
     }
 }
 
@@ -122,6 +141,9 @@ function updateScreen(data) {
             if (data.value[i].username === username) continue;
 
             var li = document.createElement("li");
+            li.onclick = function() {
+                startChat(this);
+            };
 
             var nameDiv = document.createElement("div");
             nameDiv.innerHTML = data.value[i].username;
@@ -133,6 +155,26 @@ function updateScreen(data) {
 
             id("all_users_list").appendChild(li);
         }
+    }
+}
+
+function startChat(element) {
+    receiver = element.children[0].innerHTML;
+    console.log(receiver);
+    logger.innerHTML += "Start chat with [" + receiver + "]<br>";
+
+    id("chat_title").innerHTML = receiver;
+    id("contact_screen").style.display = "none";
+    id("chat_screen").style.display = "block";
+
+    populateChatHistory();
+}
+
+function populateChatHistory() {
+    if (chatHistory.hasOwnProperty(receiver)) {
+        // Chat history exists
+    } else {
+        chatHistory[receiver] = [];
     }
 }
 

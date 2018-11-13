@@ -2,6 +2,7 @@ package com.ig.chat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ig.chat.model.Message;
 import com.ig.chat.model.UserListJson;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
@@ -37,7 +38,8 @@ public class Handler {
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
-
+        final Message incomingMessage = gson.fromJson(message, Message.class);
+        LOG.info("Received new (chat) message: {}", incomingMessage);
     }
 
     @OnWebSocketClose
