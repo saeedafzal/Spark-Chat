@@ -1,5 +1,6 @@
 var username; // The current user's username.
 var logger = id("logger"); // The DOM element where everything is logged.
+var ws; // Websocket
 
 // HTTP Requests
 // Login function + start websocket
@@ -40,7 +41,7 @@ function createAccount() {
 	var username_create = id("username_create").value;
 	var password_create = id("password_create").value;
 	var conf_pass_create = id("conf_pass_create").value;
-	
+
 	if (username_create === "" || password_create === "" || conf_pass_create === "") {
 		logger.innerHTML += "Enter all fields.<br>";
         return;
@@ -49,7 +50,7 @@ function createAccount() {
 		logger.innerHTML += "Passwords do not match.<br>";
 		return;
 	}
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "http://localhost:4567/create");
 	xhr.setRequestHeader("Content-Type", "application/json");
@@ -57,9 +58,11 @@ function createAccount() {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			var data = JSON.parse(xhr.responseText);
 			console.log("Received data.");
-			
-			if (data.status) {
+
+			if (data.key) {
 				logger.innerHTML += data.message + "<br>";
+				id("create_screen").style.display = "none";
+				id("login_screen").style.display = "block";
 			} else logger.innerHTML += data.message + "<br>";
 		}
 	};
@@ -77,18 +80,25 @@ function logout() {
             var data = JSON.parse(xhr.responseText);
             console.log("Received data.");
 
-            if (data.status) {
+            if (data.key) {
                 logger.innerHTML += data.message + "<br>";
-                id("")
+                for (var i=0; i < document.getElementsByTagName("body")[0].children.length; i++) {
+                    document.getElementsByTagName("body")[0].children[i].style.display = "none";
+                }
+
+                ws.close();
+
+                id("login_screen").style.display = "block";
             } else logger.innerHTML += data.message + "<br>";
         }
     };
+
     xhr.send(username);
 }
 
 // Websocket connection
 function socketConnect() {
-    var ws = new WebSocket("ws://localhost:4567/chat");
+    ws = new WebSocket("ws://localhost:4567/chat");
 
     ws.onmessage = function(msg) {
         var data = JSON.parse(msg.data);
@@ -96,6 +106,10 @@ function socketConnect() {
         console.log(data);
         updateScreen(data);
     };
+
+    ws.onclose = function() {
+        logger.innerHTML += "Connection closed.<br>";
+    }
 }
 
 function updateScreen(data) {

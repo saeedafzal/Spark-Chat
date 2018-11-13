@@ -13,14 +13,14 @@
             <button onclick="login()">Login</button>
             <button onclick="displayCreateAccount()">Create Account</button>
         </div>
-        
+
         <!-- CREATE ACCOUNT SCREEN -->
         <div id="create_screen">
-        	<input id="username_create" type="text" placeholder="Username...">
-    		<input id="password_create" type="password" placeholder="Password...">
-        	<input id="conf_pass_create" type="password" placeholder="Confirm Password...">
-        	<button onclick="createAccount()">Create Account</button>
-        	<button onclick="backToLogin()">Back To Login</button>
+            <input id="username_create" type="text" placeholder="Username...">
+            <input id="password_create" type="password" placeholder="Password...">
+            <input id="conf_pass_create" type="password" placeholder="Confirm Password...">
+            <button onclick="createAccount()">Create Account</button>
+            <button onclick="backToLogin()">Back To Login</button>
         </div>
 
         <!-- CONTACTS SCREEN -->
@@ -29,7 +29,7 @@
             <div>
                 <ul id="all_users_list"></ul>
             </div>
-            <button>Logout</button>
+            <button onclick="logout()">Logout</button>
         </div>
 
         <div id="logger"></div>

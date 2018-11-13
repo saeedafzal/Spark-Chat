@@ -42,7 +42,10 @@ public class Handler {
 
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
+        LOG.info("Connection closed:\n\tStatus Code: {}\n\tReason: {}", statusCode, reason);
+        sessions.remove(session);
 
+        broadcastUserList();
     }
 
     // Broadcasts user list to all online users

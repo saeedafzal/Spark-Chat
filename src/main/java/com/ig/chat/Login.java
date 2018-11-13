@@ -91,6 +91,14 @@ class Login {
             if (username.equals(onlineUser.getUsername())) {
                 onlineUsers.remove(onlineUser);
                 LOG.info("User has been logged out.");
+
+                for (Account user : userList) {
+                    if (username.equals(user.getUsername())) {
+                        user.setStatus(Status.OFFLINE);
+                        break;
+                    }
+                }
+
                 return new Response(true, "User has been logged out.");
             }
         }
