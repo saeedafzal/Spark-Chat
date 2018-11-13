@@ -2,7 +2,7 @@ package com.ig.chat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ig.chat.model.JsonObject;
+import com.ig.chat.model.UserListJson;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -26,10 +26,10 @@ public class Handler {
 
     @OnWebSocketConnect
     public void onConnect(Session session) {
+        LOG.info("{} joined the server!", session.getLocalAddress());
+        // Set timeout to one day for each connected session
         session.setIdleTimeout(TimeUnit.DAYS.toMillis(1));
 
-        // Set timeout to one day for each connected session
-        LOG.info("{} joined the server!", session.getLocalAddress());
         sessions.add(session);
 
         broadcastUserList();
@@ -49,7 +49,7 @@ public class Handler {
     private void broadcastUserList() {
         sessions.stream().filter(Session::isOpen).forEach(session -> {
             try {
-                session.getRemote().sendString(gson.toJson(new JsonObject("userlist", login.getOnlineUsers())));
+                session.getRemote().sendString(gson.toJson(new UserListJson("userlist", login.getUserList())));
             } catch (IOException io) {
                 LOG.error("Failed to send broadcast, could not send to: {}", session.getLocalAddress());
             }

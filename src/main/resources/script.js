@@ -72,15 +72,35 @@ function socketConnect() {
     var ws = new WebSocket("ws://localhost:4567/chat");
 
     ws.onmessage = function(msg) {
-        logger.innerHTML += "Received message: [" + msg.value + "]<br>";
-        console.log(msg);
-        console.log(msg.key + "|" + msg.value);
-        updateScreen(msg);
+        var data = JSON.parse(msg.data);
+        logger.innerHTML += "Received message: [" + data.key + "]<br>";
+        console.log(data);
+        updateScreen(data);
     };
 }
 
-function updateScreen(msg) {
+function updateScreen(data) {
+    // Check msg type
+    if (data.key === "userlist") {
+        id("all_users_list").innerHTML = "";
+        // Message is a userlist
+        for (var i=0; i < data.value.length; i++) {
+            // Check for own account
+            if (data.value[i].username === username) continue;
 
+            var li = document.createElement("li");
+
+            var nameDiv = document.createElement("div");
+            nameDiv.innerHTML = data.value[i].username;
+            var statusDiv = document.createElement("div");
+            statusDiv.innerHTML = data.value[i].status;
+
+            li.appendChild(nameDiv);
+            li.appendChild(statusDiv);
+
+            id("all_users_list").appendChild(li);
+        }
+    }
 }
 
 // Switch screen functions

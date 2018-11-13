@@ -1,6 +1,7 @@
 package com.ig.chat;
 
 import com.ig.chat.model.Account;
+import com.ig.chat.model.AccountEntry;
 import com.ig.chat.model.LoginException;
 import com.ig.chat.model.Response;
 import com.ig.chat.model.Status;
@@ -25,29 +26,26 @@ class Login {
     /**
      * Attempts to log in the specified user and fails if it cannot login.
      */
-    Response login(Account account) throws LoginException {
+    Response login(AccountEntry account) throws LoginException {
         // Check if username exists.
         for (Account userListAccount : userList) {
             if (account.getUsername().equals(userListAccount.getUsername())) {
                 LOG.info("User exists.");
                 // Check if user is not online
-                for (Account onlineUserAccount : onlineUsers) {
-                    if (account.getUsername().equals(onlineUserAccount.getUsername())) {
-                        // User is already online
-                        LOG.warn("User is already online.");
-                        throw new LoginException("User is already online!");
-                    }
-                }
-
-                // Check if password matches
-                if (account.getPassword().equals(userListAccount.getPassword())) {
-                    LOG.info("User logged in.");
-                    account.setStatus(Status.OFFLINE);
-                    onlineUsers.add(account);
-                    return new Response(true, "User logged in.");
+                if (userListAccount.getStatus() == Status.ONLINE) {
+                    LOG.warn("User is already online.");
+                    throw new LoginException("User is already online!");
                 } else {
-                    LOG.warn("Incorrect password.");
-                    throw new LoginException("Incorrect Password!");
+                    // Check if password matches
+                    if (account.getPassword().equals(userListAccount.getPassword())) {
+                        LOG.info("User logged in.");
+                        userListAccount.setStatus(Status.ONLINE);
+                        onlineUsers.add(userListAccount);
+                        return new Response(true, "User logged in.");
+                    } else {
+                        LOG.warn("Incorrect password.");
+                        throw new LoginException("Incorrect Password!");
+                    }
                 }
             }
         }
@@ -76,6 +74,7 @@ class Login {
 
     /**
      * Adds a user to the user list. Will add users with same name, so checks need to be done before.
+     *
      * @param account The account to be added.
      */
     void addUser(Account account) {

@@ -1,6 +1,7 @@
 package com.ig.chat;
 
 import com.ig.chat.model.Account;
+import com.ig.chat.model.AccountEntry;
 import com.ig.chat.model.LoginException;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class CreateAccountTest {
     public void loggingInWithCreatedAccountTest() throws LoginException {
     	assertThat(login.getOnlineUsers().size(), is(0));
     	
-    	Account account = new Account("Saeed", "Pass");
+    	AccountEntry account = new AccountEntry("Saeed", "Pass");
     	login.createAccount(account.getUsername(), account.getPassword());
     	login.login(account);
     	assertThat(login.getOnlineUsers().size(), is(1));

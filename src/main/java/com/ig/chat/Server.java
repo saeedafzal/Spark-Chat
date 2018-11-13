@@ -3,6 +3,7 @@ package com.ig.chat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ig.chat.model.Account;
+import com.ig.chat.model.AccountEntry;
 import com.ig.chat.model.LoginException;
 import com.ig.chat.model.Response;
 import org.slf4j.Logger;
@@ -27,11 +28,11 @@ public class Server {
         // Login
         post("/login", (req, res) -> {
             LOG.info("Server: [Received login request: {}]", req.body());
-            final Account account = gson.fromJson(req.body(), Account.class);
-            LOG.info("Account: {}", account);
+            final AccountEntry accountEntry = gson.fromJson(req.body(), AccountEntry.class);
+            LOG.info("Account: {}", accountEntry);
 
             try {
-                return gson.toJson(login.login(account));
+                return gson.toJson(login.login(accountEntry));
             } catch (LoginException e) {
                 LOG.error("Failed to login: {}", e.getMessage(), e);
                 return gson.toJson(new Response(false, e.getMessage()));

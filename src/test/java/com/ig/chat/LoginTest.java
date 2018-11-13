@@ -1,6 +1,7 @@
 package com.ig.chat;
 
 import com.ig.chat.model.Account;
+import com.ig.chat.model.AccountEntry;
 import com.ig.chat.model.LoginException;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,25 +25,25 @@ public class LoginTest {
     public void loginSuccessTest() throws LoginException {
         assertThat(login.getOnlineUsers().size(), is(0));
 
-        login.login(new Account("Bob", "bob"));
+        login.login(new AccountEntry("Bob", "bob"));
         assertThat(login.getOnlineUsers().size(), is(1));
     }
 
     @Test(expected = LoginException.class)
     public void wrongUsernameTest() throws LoginException {
-        login.login(new Account("Random", "asd"));
+        login.login(new AccountEntry("Random", "asd"));
     }
 
     @Test(expected = LoginException.class)
     public void correctUsernameWrongPasswordTest() throws LoginException {
-        login.login(new Account("Bob", "asd"));
+        login.login(new AccountEntry("Bob", "asd"));
     }
 
     @Test(expected = LoginException.class)
     public void alreadyOnlineTest() throws LoginException {
-        login.login(new Account("Bob", "bob"));
+        login.login(new AccountEntry("Bob", "bob"));
 
         // Try logging in again with same details
-        login.login(new Account("Bob", "bob"));
+        login.login(new AccountEntry("Bob", "bob"));
     }
 }
