@@ -17,6 +17,9 @@ public class Server {
     private Gson gson = new GsonBuilder().create();
     private final Login login;
 
+    /**
+     * Gets the {@link Login} reference and creates dummy accounts.
+     */
     private Server() {
         this.login = Login.getInstance();
         login.addUser(new Account("Bob", "bob"));
@@ -24,6 +27,9 @@ public class Server {
         login.addUser(new Account("Giant", "giant"));
     }
 
+    /**
+     * Sets the HTTP server routes.
+     */
     private void start() {
         // Login
         post("/login", (req, res) -> {
@@ -42,13 +48,25 @@ public class Server {
         // Create Account
         post("/create", (req, res) -> {
             LOG.info("Server: Received create account request: {}", req.body());
-            final Account account = gson.fromJson(req.body(), Account.class);            
+            final AccountEntry account = gson.fromJson(req.body(), AccountEntry.class);
             
             try {
             	return gson.toJson(login.createAccount(account.getUsername(), account.getPassword()));
             } catch (LoginException e) {
             	LOG.error("Failed to create account: {}", e.getMessage(), e);
             	return gson.toJson(new Response(false, e.getMessage()));
+            }
+        });
+
+        // Logout
+        post("/logout", (req, res) -> {
+            LOG.info("Received logout request for: {}", req.body());
+
+            try {
+                return gson.toJson(login.logout(req.body()));
+            } catch (LoginException e) {
+                LOG.error("Failed to logout account: {}", e.getMessage(), e);
+                return gson.toJson(new Response(false, e.getMessage()));
             }
         });
     }

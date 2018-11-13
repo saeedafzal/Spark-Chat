@@ -67,6 +67,25 @@ function createAccount() {
 	xhr.send(account);
 }
 
+// Logout
+function logout() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/logout");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            console.log("Received data.");
+
+            if (data.status) {
+                logger.innerHTML += data.message + "<br>";
+                id("")
+            } else logger.innerHTML += data.message + "<br>";
+        }
+    };
+    xhr.send(username);
+}
+
 // Websocket connection
 function socketConnect() {
     var ws = new WebSocket("ws://localhost:4567/chat");

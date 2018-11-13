@@ -25,6 +25,9 @@ class Login {
 
     /**
      * Attempts to log in the specified user and fails if it cannot login.
+     * @param account The account entry to be logged in.
+     * @return A response determining success or failure.
+     * @throws LoginException If account could not be logged in.
      */
     Response login(AccountEntry account) throws LoginException {
         // Check if username exists.
@@ -54,8 +57,13 @@ class Login {
         throw new LoginException("User does not exist.");
     }
 
+
     /**
      * Attempts to create a new account and fails if it cannot create.
+     * @param username The username of the account.
+     * @param password The password of the account.
+     * @return A response determining success or failure.
+     * @throws LoginException If the account could not be created.
      */
     Response createAccount(String username, String password) throws LoginException {
         // Check if username already exists
@@ -73,8 +81,26 @@ class Login {
     }
 
     /**
+     * Attempts to logout the user.
+     * @param username The username of the account to be logged out.
+     * @return A response determining success or failure.
+     * @throws LoginException If user could not be logged out.
+     */
+    Response logout(String username) throws LoginException {
+        for (Account onlineUser : onlineUsers) {
+            if (username.equals(onlineUser.getUsername())) {
+                onlineUsers.remove(onlineUser);
+                LOG.info("User has been logged out.");
+                return new Response(true, "User has been logged out.");
+            }
+        }
+
+        LOG.warn("Error logging out user. User might not be logged on.");
+        throw new LoginException("Error logging out user.");
+    }
+
+    /**
      * Adds a user to the user list. Will add users with same name, so checks need to be done before.
-     *
      * @param account The account to be added.
      */
     void addUser(Account account) {
