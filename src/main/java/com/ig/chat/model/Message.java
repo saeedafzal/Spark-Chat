@@ -2,10 +2,18 @@ package com.ig.chat.model;
 
 public class Message {
 
-    private String sender, recipient, message;
+    private String key, sender, recipient, message, time;
+    
+    public void setKey(String key) {
+    	this.key = key;
+    }
+    
+    public String getRecipient() {
+    	return recipient;
+    }
 
     @Override
     public String toString() {
-        return "Message: " + "\n\tusername='" + sender + '\'' + ",\n\trecipient='" + recipient + '\'' + ",\n\tmessage='" + message + '\'';
+        return "Message: " + "\n\tusername='" + sender + '\'' + ",\n\trecipient='" + recipient + '\'' + ",\n\tmessage='" + message + '\'' + ",\n\ttime='" + time + '\'';
     }
 }

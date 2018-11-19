@@ -17,6 +17,7 @@ class Login {
     private static Login login_instance = null;
     private List<Account> onlineUsers = new ArrayList<>();
     private List<Account> userList = new ArrayList<>();
+    private String currentUserName;
 
     static Login getInstance() {
         if (login_instance == null) login_instance = new Login();
@@ -121,5 +122,13 @@ class Login {
 
     List<Account> getUserList() {
         return userList;
+    }
+    
+    String getCurrentUserName() {
+    	return this.currentUserName;
+    }
+    
+    public void setCurrentUserName(String name) {
+    	currentUserName = name;
     }
 }

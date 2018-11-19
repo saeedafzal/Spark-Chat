@@ -32,10 +32,11 @@ public class Server {
      */
     private void start() {
         // Login
-        post("/login", (req, res) -> {
+        post("/login/:username", (req, res) -> {
             LOG.info("Server: [Received login request: {}]", req.body());
             final AccountEntry accountEntry = gson.fromJson(req.body(), AccountEntry.class);
             LOG.info("Account: {}", accountEntry);
+            login.setCurrentUserName(req.params(":username"));
 
             try {
                 return gson.toJson(login.login(accountEntry));

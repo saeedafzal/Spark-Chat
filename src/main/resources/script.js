@@ -17,7 +17,7 @@ function login() {
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:4567/login");
+    xhr.open("POST", "http://localhost:4567/login/" + username);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -155,7 +155,33 @@ function updateScreen(data) {
 
             id("all_users_list").appendChild(li);
         }
+    } else if (data.key === "message") {
+    	// Check if in chat screen with the correct person
+    	if (receiver === data.recipient && !isHidden(id("chat_screen"))) {
+    		// Check if it is a message we send or recieved
+    		if (data.sender === username) {
+    			// Message we sent
+    			insertMessage(null, data.message);
+    		}
+    	}
     }
+}
+
+function insertMessage(name, message) {
+	var li = document.createElement("li");
+	
+	if (name !== "") {
+		var div = document.createElement("div");
+		div.innerHTML = name;
+		li.appendChild(div);
+	}
+	
+	var div = document.createElement("div");
+	div.innerHTML = message;
+	
+	li.appendChild(div);
+	
+	id("chat_history").appendChild(li);
 }
 
 function startChat(element) {
@@ -192,4 +218,8 @@ function backToLogin() {
 // Helper functions
 function id(id) {
     return document.getElementById(id);
+}
+
+function isHidden(el) {
+    return (el.offsetParent === null);
 }
