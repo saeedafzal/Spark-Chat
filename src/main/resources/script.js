@@ -157,11 +157,14 @@ function updateScreen(data) {
         }
     } else if (data.key === "message") {
     	// Check if in chat screen with the correct person
-    	if (receiver === data.recipient && !isHidden(id("chat_screen"))) {
+    	if ((receiver === data.recipient || receiver === data.sender) && !isHidden(id("chat_screen"))) {
     		// Check if it is a message we send or recieved
     		if (data.sender === username) {
     			// Message we sent
     			insertMessage(null, data.message);
+    		} else {
+    			// Message we receive
+    			insertMessage(data.sender, data.message)
     		}
     	}
     }
