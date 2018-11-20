@@ -1,3 +1,8 @@
+body {
+    background: url("images/light.jpg");
+    font: 14px/20px "Lato", Arial, sans-serif;
+}
+
 #logger {
     border: 1px solid black;
     height: 250px;
@@ -6,6 +11,56 @@
     left: 65%;
     top: 60%;
 }
+
+/* -------------------------------- */
+/* Login Screen */
+.login_screen {
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: rgba(0, 0, 0, 0.1);
+    width: 30%;
+}
+
+.login_screen h1 {
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.login_screen input {
+    outline: none;
+    background: none;
+    padding: 12px 20px;
+    margin: 8px;
+    border: 2px solid white;
+    border-radius: 4px;
+    width: 50%;
+    color: black;
+}
+
+#password_input {
+    margin-bottom: 50px;
+}
+
+#login_screen button {
+    padding: 0;
+    margin-bottom: 20px;
+    background: #5BB6FD;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+    width: 40%;
+    height: 38px;
+    font-size: 20px;
+    -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#00abeb), to(#fff), color-stop(0.5, #fff), color-stop(0.5, #00abeb)) 21 30 30 21 repeat repeat;
+}
+
+#login_screen button:hover {
+    background: #fff;
+    color: #5BB6FD;
+    border: 1px #4CABFB solid;
+}
+/* -------------------------------- */
 
 #create_screen {
     display: none;

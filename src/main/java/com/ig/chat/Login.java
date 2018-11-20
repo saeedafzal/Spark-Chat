@@ -128,7 +128,7 @@ class Login {
     	return this.currentUserName;
     }
     
-    public void setCurrentUserName(String name) {
+    void setCurrentUserName(String name) {
     	currentUserName = name;
     }
 }

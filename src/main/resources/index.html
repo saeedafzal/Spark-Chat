@@ -7,10 +7,12 @@
     </head>
     <body>
         <!-- LOGIN SCREEN -->
-        <div id="login_screen">
-            <input id="username_input" type="text" placeholder="Username...">
-            <input id="password_input" type="password" placeholder="Password...">
+        <div id="login_screen" class="login_screen">
+            <h1>Login</h1>
+            <input id="username_input" class="field_input" type="text" placeholder="Username...">
+            <input id="password_input" class="field_input" type="password" placeholder="Password...">
             <button onclick="login()">Login</button>
+            <br/>
             <button onclick="displayCreateAccount()">Create Account</button>
         </div>
 
@@ -25,9 +27,16 @@
 
         <!-- CONTACTS SCREEN -->
         <div id="contact_screen">
-            <div>Contacts Screen</div>
+            <div class="top_bar">
+                <button onclick="logout()">Logout</button>
+            </div>
+            <div class="contacts_header">Contacts Screen</div>
+
             <div>
-                <ul id="all_users_list"></ul>
+                <input type="text" id="search_user" onkeyup="search()" placeholder="Search for users..."/>
+                <div>
+                    <ul id="all_users_list"></ul>
+                </div>
             </div>
             <button onclick="logout()">Logout</button>
         </div>

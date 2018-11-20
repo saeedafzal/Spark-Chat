@@ -243,3 +243,17 @@ function id(id) {
 function isHidden(el) {
     return (el.offsetParent === null);
 }
+
+function search() {
+    var input, filter, ul, li;
+    input = id('search_user');
+    filter = input.value.toUpperCase();
+    ul = id('all_users_list');
+    li = ul.getElementsByTagName('li');
+
+    for (var a of li) {
+        console.log("Item in list: " + a.children[0].innerHTML);
+        if (a.children[0].innerHTML.toUpperCase().indexOf(filter) > -1) a.style.display = "";
+        else a.style.display = "none";
+    }
+}
