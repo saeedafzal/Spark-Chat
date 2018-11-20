@@ -141,11 +141,8 @@ function updateScreen(data) {
             if (data.value[i].username === username) continue;
 
             var li = document.createElement("li");
-            li.onclick = function() {
-                startChat(this);
-            };
-
             var nameDiv = document.createElement("div");
+
             nameDiv.innerHTML = data.value[i].username;
             var statusDiv = document.createElement("div");
             statusDiv.innerHTML = data.value[i].status;
@@ -153,12 +150,16 @@ function updateScreen(data) {
             li.appendChild(nameDiv);
             li.appendChild(statusDiv);
 
+            li.onclick = function() {
+                startChat(this);
+            };
+
             id("all_users_list").appendChild(li);
         }
     } else if (data.key === "message") {
     	// Check if in chat screen with the correct person
     	if ((receiver === data.recipient || receiver === data.sender) && !isHidden(id("chat_screen"))) {
-    		// Check if it is a message we send or recieved
+    		// Check if it is a message we send or received
     		if (data.sender === username) {
     			// Message we sent
     			insertMessage(null, data.message);
@@ -166,42 +167,53 @@ function updateScreen(data) {
     			// Message we receive
     			insertMessage(data.sender, data.message)
     		}
+
+    		chatHistory[receiver].push(
+    		    {sender: data.sender === username ? "" : data.sender, message: data.message}
+    		);
     	}
     }
 }
 
 function insertMessage(name, message) {
 	var li = document.createElement("li");
-	
+	var div;
+
 	if (name !== "") {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		div.innerHTML = name;
 		li.appendChild(div);
 	}
 	
-	var div = document.createElement("div");
+	div = document.createElement("div");
 	div.innerHTML = message;
 	
 	li.appendChild(div);
-	
+
 	id("chat_history").appendChild(li);
 }
 
 function startChat(element) {
-    receiver = element.children[0].innerHTML;
-    console.log(receiver);
-    logger.innerHTML += "Start chat with [" + receiver + "]<br>";
+    if (element.children[1].innerHTML === "ONLINE") {
+        id("chat_history").innerHTML = "";
+        receiver = element.children[0].innerHTML;
+        console.log(receiver);
+        logger.innerHTML += "Start chat with [" + receiver + "]<br>";
 
-    id("chat_title").innerHTML = receiver;
-    id("contact_screen").style.display = "none";
-    id("chat_screen").style.display = "block";
+        id("chat_title").innerHTML = receiver;
+        id("contact_screen").style.display = "none";
+        id("chat_screen").style.display = "block";
 
-    populateChatHistory();
+        populateChatHistory();
+    }
 }
 
 function populateChatHistory() {
     if (chatHistory.hasOwnProperty(receiver)) {
         // Chat history exists
+        chatHistory[receiver].forEach(message => {
+            insertMessage(message.sender, message.message);
+        });
     } else {
         chatHistory[receiver] = [];
     }
@@ -216,6 +228,11 @@ function displayCreateAccount() {
 function backToLogin() {
     id("create_screen").style.display = "none";
     id("login_screen").style.display = "block";
+}
+
+function backToContacts() {
+    id("chat_screen").style.display = "none";
+    id("contact_screen").style.display = "block";
 }
 
 // Helper functions
