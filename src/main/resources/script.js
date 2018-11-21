@@ -40,36 +40,36 @@ function login() {
 
 // Create account function
 function createAccount() {
-	var username_create = id("username_create").value;
-	var password_create = id("password_create").value;
-	var conf_pass_create = id("conf_pass_create").value;
+    var username_create = id("username_create").value;
+    var password_create = id("password_create").value;
+    var conf_pass_create = id("conf_pass_create").value;
 
-	if (username_create === "" || password_create === "" || conf_pass_create === "") {
-		logger.innerHTML += "Enter all fields.<br>";
+    if (username_create === "" || password_create === "" || conf_pass_create === "") {
+        logger.innerHTML += "Enter all fields.<br>";
         return;
-	}
-	if (password_create !== conf_pass_create) {
-		logger.innerHTML += "Passwords do not match.<br>";
-		return;
-	}
+    }
+    if (password_create !== conf_pass_create) {
+        logger.innerHTML += "Passwords do not match.<br>";
+        return;
+    }
 
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "http://localhost:4567/create");
-	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			var data = JSON.parse(xhr.responseText);
-			console.log("Received data.");
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/create");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            console.log("Received data.");
 
-			if (data.key) {
-				logger.innerHTML += data.message + "<br>";
-				id("create_screen").style.display = "none";
-				id("login_screen").style.display = "block";
-			} else logger.innerHTML += data.message + "<br>";
-		}
-	};
-	var account = JSON.stringify({username: username_create, password: password_create});
-	xhr.send(account);
+            if (data.key) {
+                logger.innerHTML += data.message + "<br>";
+                id("create_screen").style.display = "none";
+                id("login_screen").style.display = "block";
+            } else logger.innerHTML += data.message + "<br>";
+        }
+    };
+    var account = JSON.stringify({username: username_create, password: password_create});
+    xhr.send(account);
 }
 
 // Logout
@@ -102,14 +102,14 @@ function logout() {
 function socketConnect() {
     ws = new WebSocket("ws://localhost:4567/chat");
 
-    ws.onmessage = function(msg) {
+    ws.onmessage = function (msg) {
         var data = JSON.parse(msg.data);
         logger.innerHTML += "Received message: [" + data.key + "]<br>";
         console.log(data);
         updateScreen(data);
     };
 
-    ws.onclose = function() {
+    ws.onclose = function () {
         logger.innerHTML += "Connection closed.<br>";
     };
 
@@ -150,47 +150,47 @@ function updateScreen(data) {
             li.appendChild(nameDiv);
             li.appendChild(statusDiv);
 
-            li.onclick = function() {
+            li.onclick = function () {
                 startChat(this);
             };
 
             id("all_users_list").appendChild(li);
         }
     } else if (data.key === "message") {
-    	// Check if in chat screen with the correct person
-    	if ((receiver === data.recipient || receiver === data.sender) && !isHidden(id("chat_screen"))) {
-    		// Check if it is a message we send or received
-    		if (data.sender === username) {
-    			// Message we sent
-    			insertMessage(null, data.message);
-    		} else {
-    			// Message we receive
-    			insertMessage(data.sender, data.message)
-    		}
+        // Check if in chat screen with the correct person
+        if ((receiver === data.recipient || receiver === data.sender) && !isHidden(id("chat_screen"))) {
+            // Check if it is a message we send or received
+            if (data.sender === username) {
+                // Message we sent
+                insertMessage(null, data.message);
+            } else {
+                // Message we receive
+                insertMessage(data.sender, data.message)
+            }
 
-    		chatHistory[receiver].push(
-    		    {sender: data.sender === username ? "" : data.sender, message: data.message}
-    		);
-    	}
+            chatHistory[receiver].push(
+                {sender: data.sender === username ? "" : data.sender, message: data.message}
+            );
+        }
     }
 }
 
 function insertMessage(name, message) {
-	var li = document.createElement("li");
-	var div;
+    var li = document.createElement("li");
+    var div;
 
-	if (name !== "") {
-		div = document.createElement("div");
-		div.innerHTML = name;
-		li.appendChild(div);
-	}
-	
-	div = document.createElement("div");
-	div.innerHTML = message;
-	
-	li.appendChild(div);
+    if (name !== "") {
+        div = document.createElement("div");
+        div.innerHTML = name;
+        li.appendChild(div);
+    }
 
-	id("chat_history").appendChild(li);
+    div = document.createElement("div");
+    div.innerHTML = message;
+
+    li.appendChild(div);
+
+    id("chat_history").appendChild(li);
 }
 
 function startChat(element) {
@@ -221,8 +221,8 @@ function populateChatHistory() {
 
 // Switch screen functions
 function displayCreateAccount() {
-	id("login_screen").style.display = "none";
-	id("create_screen").style.display = "block";
+    id("login_screen").style.display = "none";
+    id("create_screen").style.display = "block";
 }
 
 function backToLogin() {
