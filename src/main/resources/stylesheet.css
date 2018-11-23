@@ -1,6 +1,8 @@
 body {
     background: url("images/light.jpg");
     font: 14px/20px "Lato", Arial, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 #logger {
@@ -59,6 +61,88 @@ body {
     background: #fff;
     color: #5BB6FD;
     border: 1px #4CABFB solid;
+}
+/* -------------------------------- */
+/* Contact Screen */
+.top_bar {
+    height: 5vh;
+    margin-bottom: 20px;
+    background: rgba(0, 117, 113, 0.4);
+}
+
+.top_bar button {
+    color: #4f7492;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #F2F5F8;
+    width: 100px;
+    padding: 5px;
+    position: absolute;
+    left: 90%;
+    top: 1%;
+}
+
+.contacts_header {
+    padding: 40px;
+    font-size: 30px;
+}
+
+.contact_con {
+    padding-left: 40px;
+}
+
+.contact_con input {
+    border-radius: 15px;
+    height: 30px;
+    width: 250px;
+    text-align: center;
+}
+
+.contact_con input:focus {
+    outline: none;
+}
+
+.contact_list_header {
+    background-color: rgba(94, 115, 114, 0.4);
+    height: 40px;
+    width: 500px;
+    margin-top: 30px;
+}
+
+.contact_list_header div {
+    float: left;
+    padding: 10px;
+}
+
+#header_name {
+    width: 300px;
+}
+
+.contact_user_list {
+    list-style: none;
+    margin: 10px auto auto;
+    padding: 0;
+}
+
+.contact_user_list li {
+    width: 500px;
+}
+
+.contact_user_list li div {
+    float: left;
+    padding: 10px;
+}
+
+#contact_name_list {
+    width: 300px;
+}
+
+#contact_name_list:hover {
+    background-color: rgba(0, 117, 113, 0.4);
+    transition: background-color 500ms linear;
 }
 /* -------------------------------- */
 

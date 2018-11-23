@@ -30,17 +30,21 @@
             <div class="top_bar">
                 <button onclick="logout()">Logout</button>
             </div>
-            <div class="contacts_header">Contacts Screen</div>
+            <div class="contacts_header"><b>Contacts Screen</b></div>
 
-            <div>
+            <div class="contact_con">
                 <input type="text" id="search_user" onkeyup="search()" placeholder="Search for users..."/>
+                <div class="contact_list_header">
+                    <div id="header_name">Name</div>
+                    <div>Status</div>
+                </div>
                 <div>
-                    <ul id="all_users_list"></ul>
+                    <ul id="all_users_list" class="contact_user_list"></ul>
                 </div>
             </div>
-            <button onclick="logout()">Logout</button>
         </div>
 
+        <!-- MAIN CHAT SCREEN -->
         <div id="chat_screen">
             <div id="chat_title"></div>
             <ul id="chat_history"></ul>
@@ -49,6 +53,7 @@
             <button id="chat_back" onclick="backToContacts()">Back</button>
         </div>
 
+        <!-- VISUAL LOGGING -->
         <div id="logger"></div>
 
         <script src="script.js"></script>

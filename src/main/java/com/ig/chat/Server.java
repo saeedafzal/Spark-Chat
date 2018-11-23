@@ -17,9 +17,7 @@ public class Server {
     private Gson gson = new GsonBuilder().create();
     private final Login login;
 
-    /**
-     * Gets the {@link Login} reference and creates dummy accounts.
-     */
+    // Gets the login reference and creates dummy accounts.
     private Server() {
         this.login = Login.getInstance();
         login.addUser(new Account("Bob", "bob"));
@@ -27,9 +25,7 @@ public class Server {
         login.addUser(new Account("Giant", "giant"));
     }
 
-    /**
-     * Sets the HTTP server routes.
-     */
+    // Sets the HTTP server routes.
     private void start() {
         // Login
         post("/login/:username", (req, res) -> {

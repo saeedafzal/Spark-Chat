@@ -84,7 +84,7 @@ function logout() {
 
             if (data.key) {
                 logger.innerHTML += data.message + "<br>";
-                for (var i=0; i < document.getElementsByTagName("body")[0].children.length; i++) {
+                for (var i = 0; i < document.getElementsByTagName("body")[0].children.length; i++) {
                     document.getElementsByTagName("body")[0].children[i].style.display = "none";
                 }
 
@@ -136,16 +136,24 @@ function updateScreen(data) {
     if (data.key === "userlist") {
         id("all_users_list").innerHTML = "";
         // Message is a userlist
-        for (var i=0; i < data.value.length; i++) {
+        for (var i = 0; i < data.value.length; i++) {
             // Check for own account
             if (data.value[i].username === username) continue;
 
             var li = document.createElement("li");
-            var nameDiv = document.createElement("div");
 
+            var avatarDiv = document.createElement("div");
+            avatarDiv.innerHTML = data.value[i].username[0];
+
+            var nameDiv = document.createElement("div");
+            nameDiv.id = "contact_name_list";
             nameDiv.innerHTML = data.value[i].username;
+
             var statusDiv = document.createElement("div");
             statusDiv.innerHTML = data.value[i].status;
+            if (statusDiv.innerHTML === "ONLINE") {
+                statusDiv.style.color = "green";
+            } else statusDiv.style.color = "red";
 
             li.appendChild(nameDiv);
             li.appendChild(statusDiv);
@@ -219,7 +227,7 @@ function populateChatHistory() {
     }
 }
 
-// Switch screen functions
+// Switch screens functions
 function displayCreateAccount() {
     id("login_screen").style.display = "none";
     id("create_screen").style.display = "block";
