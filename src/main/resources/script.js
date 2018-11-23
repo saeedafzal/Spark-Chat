@@ -185,20 +185,31 @@ function updateScreen(data) {
 
 function insertMessage(name, message) {
     var li = document.createElement("li");
-    var div;
+    if (name === "") li.className = "clear";
 
-    if (name !== "") {
-        div = document.createElement("div");
-        div.innerHTML = name;
-        li.appendChild(div);
-    }
+    /* --------------Header-------------- */
+    var divHeader = document.createElement("div");
+    divHeader.className = "message_head";
 
-    div = document.createElement("div");
-    div.innerHTML = message;
+    var timeSpan = document.createElement("span");
+    timeSpan.className = "message_time";
+    timeSpan.innerHTML = message.time;
+    var nameSpan = document.createElement("span");
+    nameSpan.innerHTML = name;
 
-    li.appendChild(div);
+    divHeader.appendChild(timeSpan);
+    divHeader.innerHTML += "                  ";
+    divHeader.appendChild(nameSpan);
+    /* --------------------------------- */
+    var chatEntryDiv = document.createElement("div");
+    chatEntryDiv.className = "message_box";
+    chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
-    id("chat_history").appendChild(li);
+    var circle = document.createElement("i");
+    circle.className = "message_circle";
+
+    li.appendChild(divHeader);
+    li.appendChild(chatEntryDiv);
 }
 
 function startChat(element) {

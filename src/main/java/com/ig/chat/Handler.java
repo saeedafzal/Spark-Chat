@@ -1,6 +1,8 @@
 package com.ig.chat;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -54,6 +56,7 @@ public class Handler {
 	        	session.getRemote().sendString(gson.toJson(new Response(false, "Could not find recipient to send message to.")));
 	        } else {
 	        	incomingMessage.setKey("message");
+	        	incomingMessage.setTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 	        	receiver.getRemote().sendString(gson.toJson(incomingMessage));
 	        	session.getRemote().sendString(gson.toJson(incomingMessage));
 	        	LOG.info("Send message to recipient.");

@@ -12,6 +12,10 @@ public class Message {
     	return recipient;
     }
 
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "Message: " + "\n\tusername='" + sender + '\'' + ",\n\trecipient='" + recipient + '\'' + ",\n\tmessage='" + message + '\'' + ",\n\ttime='" + time + '\'';

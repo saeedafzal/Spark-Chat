@@ -46,11 +46,21 @@
 
         <!-- MAIN CHAT SCREEN -->
         <div id="chat_screen">
-            <div id="chat_title"></div>
-            <ul id="chat_history"></ul>
-            <input id="chat_input" placeholder="Enter message..." type="text">
-            <button id="chat_send">Send</button>
-            <button id="chat_back" onclick="backToContacts()">Back</button>
+            <div class="chat_container clear">
+                <div class="main_chat_box">
+                    <div class="chat_header clear">
+                        <div id="chat_title"></div>
+                    </div>
+                    <div class="chat_history">
+                        <ul id="chat_history"></ul>
+                    </div>
+                    <div class="chat_input">
+                        <textarea id="chat_input" placeholder="Enter message..." rows="3"></textarea>
+                        <button id="chat_send">Send</button>
+                    </div>
+                    <!--<button id="chat_back" onclick="backToContacts()">Back</button>-->
+                </div>
+            </div>
         </div>
 
         <!-- VISUAL LOGGING -->
