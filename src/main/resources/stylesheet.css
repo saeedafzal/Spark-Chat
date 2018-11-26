@@ -145,7 +145,7 @@ body {
     transition: background-color 500ms linear;
 }
 /* -------------------------------- */
-/* Contact Screen */
+/* Main Chat Screen */
 .chat_container {
     margin: 0 auto;
     width: 900px;
@@ -179,23 +179,32 @@ body {
     height: 500px;
 }
 
-#chat_history {
-    list-style: none;
+.chat_history .message-data {
+    margin-bottom: 15px;
 }
 
-.message_head {
-    margin-bottom: 15px;
+.align-right {
     text-align: right;
 }
 
-.message_time {
+.chat_history .message-data-time {
     color: #a8aab1;
     padding-left: 6px;
 }
 
-.message_circle {
+.me {
     color: #94C2ED;
     margin-right: 3px;
+    font-size: 10px;
+}
+
+.notme {
+    color: #86BB71;
+    margin-right: 3px;
+    font-size: 10px;
+}
+
+.message_circle {
     text-rendering: auto;
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
@@ -205,8 +214,11 @@ body {
     content: "\f111";
 }
 
-.message_box {
+.chat_history .other-message {
     background: #94C2ED;
+}
+
+.chat_history .message {
     color: white;
     padding: 18px 20px;
     line-height: 26px;
@@ -215,12 +227,20 @@ body {
     margin-bottom: 30px;
     width: 90%;
     position: relative;
+}
+
+.float-right {
     float: right;
 }
 
-.message_box:after {
-    bottom: 100%;
+.chat_history .other-message:after {
+    border-bottom-color: #94C2ED;
     left: 93%;
+}
+
+.chat_history .message:after {
+    bottom: 100%;
+    left: 7%;
     content: " ";
     height: 0;
     width: 0;
@@ -229,6 +249,10 @@ body {
     border: 10px solid transparent;
     border-bottom-color: #86BB71;
     margin-left: -10px;
+}
+
+#chat_history {
+    list-style: none;
 }
 
 .clear:after {

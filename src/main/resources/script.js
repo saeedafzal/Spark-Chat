@@ -167,15 +167,7 @@ function updateScreen(data) {
     } else if (data.key === "message") {
         // Check if in chat screen with the correct person
         if ((receiver === data.recipient || receiver === data.sender) && !isHidden(id("chat_screen"))) {
-            // Check if it is a message we send or received
-            if (data.sender === username) {
-                // Message we sent
-                insertMessage(null, data);
-            } else {
-                // Message we receive
-                insertMessage(data.sender, data)
-            }
-
+            insertMessage(data.sender, data);
             chatHistory[receiver].push(
                 {sender: data.sender === username ? "" : data.sender, message: data.message, time : data.time}
             );
@@ -185,28 +177,38 @@ function updateScreen(data) {
 
 function insertMessage(name, message) {
     var li = document.createElement("li");
-    if (name === "") li.className = "clear";
 
     /* --------------Header-------------- */
     var divHeader = document.createElement("div");
-    divHeader.className = "message_head";
-
+    divHeader.className = "message-data";
     var timeSpan = document.createElement("span");
-    timeSpan.className = "message_time";
+    timeSpan.className = "message-data-time";
     timeSpan.innerHTML = message.time;
     var nameSpan = document.createElement("span");
     nameSpan.innerHTML = name;
-
-    divHeader.appendChild(timeSpan);
-    divHeader.innerHTML += "                  ";
-    divHeader.appendChild(nameSpan);
+    var circle = document.createElement("i");
+    circle.className = "message_circle notme";
     /* --------------------------------- */
     var chatEntryDiv = document.createElement("div");
-    chatEntryDiv.className = "message_box";
+    chatEntryDiv.className = "message my-message";
     chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
-    var circle = document.createElement("i");
-    circle.className = "message_circle";
+    if (name === username) {
+        li.className = "clear";
+        divHeader.className = "message_data align-right";
+        circle.className = "message_circle me";
+        chatEntryDiv.className = "message other-message float-right";
+
+        divHeader.appendChild(timeSpan);
+        divHeader.innerHTML += "                  ";
+        divHeader.appendChild(nameSpan);
+        divHeader.appendChild(circle);
+    } else {
+        divHeader.appendChild(circle);
+        divHeader.appendChild(nameSpan);
+        divHeader.innerHTML += "                  ";
+        divHeader.appendChild(timeSpan);
+    }
 
     li.appendChild(divHeader);
     li.appendChild(chatEntryDiv);

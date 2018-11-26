@@ -59,7 +59,7 @@ public class Handler {
 	        	incomingMessage.setTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 	        	receiver.getRemote().sendString(gson.toJson(incomingMessage));
 	        	session.getRemote().sendString(gson.toJson(incomingMessage));
-	        	LOG.info("Send message to recipient.");
+	        	LOG.info("Sent message to recipient.");
 	        }
         } catch (IOException io) {
         	LOG.error("Failed to send message to client.", io);
