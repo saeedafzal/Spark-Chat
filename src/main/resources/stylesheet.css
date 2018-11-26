@@ -148,7 +148,7 @@ body {
 /* Contact Screen */
 .chat_container {
     margin: 0 auto;
-    width: 750px;
+    width: 900px;
     background: #444753;
     border-radius: 5px;
 }
@@ -159,6 +159,7 @@ body {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     color: #434651;
+    width: 900px;
 }
 
 .chat_header {
@@ -168,14 +169,14 @@ body {
 
 .chat_header div {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 30px;
 }
 
 .chat_history {
     padding: 30px 30px 20px;
     border-bottom: 2px solid white;
     overflow-y: scroll;
-    height: 575px;
+    height: 500px;
 }
 
 #chat_history {
@@ -237,6 +238,31 @@ body {
     content: " ";
     clear: both;
     height: 0;
+}
+
+.chat_input {
+    padding: 30px;
+}
+
+#chat_input {
+    width: 95%;
+    border: none;
+    padding: 10px 20px;
+    font: 14px/22px "Lato", Arial, sans-serif;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    resize: none;
+}
+
+#chat_send {
+    float: right;
+    color: #94C2ED;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #F2F5F8;
 }
 /* -------------------------------- */
 #create_screen {

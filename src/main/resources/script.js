@@ -170,14 +170,14 @@ function updateScreen(data) {
             // Check if it is a message we send or received
             if (data.sender === username) {
                 // Message we sent
-                insertMessage(null, data.message);
+                insertMessage(null, data);
             } else {
                 // Message we receive
-                insertMessage(data.sender, data.message)
+                insertMessage(data.sender, data)
             }
 
             chatHistory[receiver].push(
-                {sender: data.sender === username ? "" : data.sender, message: data.message}
+                {sender: data.sender === username ? "" : data.sender, message: data.message, time : data.time}
             );
         }
     }
@@ -210,6 +210,8 @@ function insertMessage(name, message) {
 
     li.appendChild(divHeader);
     li.appendChild(chatEntryDiv);
+
+    id("chat_history").appendChild(li);
 }
 
 function startChat(element) {
@@ -222,6 +224,7 @@ function startChat(element) {
         id("chat_title").innerHTML = receiver;
         id("contact_screen").style.display = "none";
         id("chat_screen").style.display = "block";
+        id("logger").style.display = "none";
 
         populateChatHistory();
     }
