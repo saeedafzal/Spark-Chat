@@ -180,25 +180,16 @@ function insertMessage(name, message) {
 
     /* --------------Header-------------- */
     var divHeader = document.createElement("div");
-    divHeader.className = "message-data";
     var timeSpan = document.createElement("span");
-    timeSpan.className = "message-data-time";
     timeSpan.innerHTML = message.time;
     var nameSpan = document.createElement("span");
     nameSpan.innerHTML = name;
     var circle = document.createElement("i");
-    circle.className = "message_circle notme";
     /* --------------------------------- */
     var chatEntryDiv = document.createElement("div");
-    chatEntryDiv.className = "message my-message";
     chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
     if (name === username) {
-        li.className = "clear";
-        divHeader.className = "message_data align-right";
-        circle.className = "message_circle me";
-        chatEntryDiv.className = "message other-message float-right";
-
         divHeader.appendChild(timeSpan);
         divHeader.innerHTML += "                  ";
         divHeader.appendChild(nameSpan);
@@ -217,7 +208,7 @@ function insertMessage(name, message) {
 }
 
 function startChat(element) {
-    if (element.children[1].innerHTML === "ONLINE") {
+    // if (element.children[1].innerHTML === "ONLINE") {
         id("chat_history").innerHTML = "";
         receiver = element.children[0].innerHTML;
         console.log(receiver);
@@ -229,7 +220,7 @@ function startChat(element) {
         id("logger").style.display = "none";
 
         populateChatHistory();
-    }
+    // }
 }
 
 function populateChatHistory() {
