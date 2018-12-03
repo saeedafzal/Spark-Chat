@@ -270,6 +270,10 @@ body {
 .float-right {
     float: right;
 }
+
+.my-message {
+	background: #86BB71;
+}
 /* -------------------------------- */
 #create_screen {
     display: none;

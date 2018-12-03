@@ -177,34 +177,45 @@ function updateScreen(data) {
 
 function insertMessage(name, message) {
     var li = document.createElement("li");
-    li.className = "clear";
     
     /* --------------Header-------------- */
     var divHeader = document.createElement("div");
-    divHeader.className = "message-data align-right";
+    divHeader.className = "message-data";
     var timeSpan = document.createElement("span");
     timeSpan.className = "message-data-time";
     timeSpan.innerHTML = message.time + "                  ";
     var nameSpan = document.createElement("span");
     nameSpan.innerHTML = name;
-
-    divHeader.appendChild(timeSpan);
-    divHeader.innerHTML += "                  ";
-    divHeader.appendChild(nameSpan);
     /* --------------------------------- */
 
     var chatEntryDiv = document.createElement("div");
-    chatEntryDiv.className = "message other-message float-right";
+    chatEntryDiv.className = "message my-message";
     chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
+    if (name === username) {
+    	li.className = "clear";
+    	divHeader.className = "message-data align-right";
+    	chatEntryDiv.className = "message other-message float-right";
+    	
+    	divHeader.appendChild(nameSpan);
+    	divHeader.innerHTML += "                  ";
+    	divHeader.appendChild(timeSpan);
+    } else {
+    	divHeader.appendChild(timeSpan);
+        divHeader.innerHTML += "                  ";
+        divHeader.appendChild(nameSpan);
+    }
+    
     li.appendChild(divHeader);
     li.appendChild(chatEntryDiv);
 
     id("chat_history").appendChild(li);
+    
+    scrollToBottom();
 }
 
 function startChat(element) {
-    // if (element.children[1].innerHTML === "ONLINE") {
+     if (element.children[1].innerHTML === "ONLINE") {
         id("chat_history").innerHTML = "";
         receiver = element.children[0].innerHTML;
         console.log(receiver);
@@ -216,7 +227,9 @@ function startChat(element) {
         id("logger").style.display = "none";
 
         populateChatHistory();
-    // }
+        
+        scrollToBottom();
+     }
 }
 
 function populateChatHistory() {
@@ -251,6 +264,10 @@ function id(id) {
     return document.getElementById(id);
 }
 
+function cls(clsName) {
+	return document.getElementsByClassName(clsName)[0];
+}
+
 function isHidden(el) {
     return (el.offsetParent === null);
 }
@@ -267,4 +284,8 @@ function search() {
         if (a.children[0].innerHTML.toUpperCase().indexOf(filter) > -1) a.style.display = "";
         else a.style.display = "none";
     }
+}
+
+function scrollToBottom() {
+	cls("chat_history").scrollTop = cls("chat_history").scrollHeight;
 }
