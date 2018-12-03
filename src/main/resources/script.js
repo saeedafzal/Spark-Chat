@@ -177,29 +177,25 @@ function updateScreen(data) {
 
 function insertMessage(name, message) {
     var li = document.createElement("li");
-
+    li.className = "clear";
+    
     /* --------------Header-------------- */
     var divHeader = document.createElement("div");
+    divHeader.className = "message-data align-right";
     var timeSpan = document.createElement("span");
-    timeSpan.innerHTML = message.time;
+    timeSpan.className = "message-data-time";
+    timeSpan.innerHTML = message.time + "                  ";
     var nameSpan = document.createElement("span");
     nameSpan.innerHTML = name;
-    var circle = document.createElement("i");
-    /* --------------------------------- */
-    var chatEntryDiv = document.createElement("div");
-    chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
-    if (name === username) {
-        divHeader.appendChild(timeSpan);
-        divHeader.innerHTML += "                  ";
-        divHeader.appendChild(nameSpan);
-        divHeader.appendChild(circle);
-    } else {
-        divHeader.appendChild(circle);
-        divHeader.appendChild(nameSpan);
-        divHeader.innerHTML += "                  ";
-        divHeader.appendChild(timeSpan);
-    }
+    divHeader.appendChild(timeSpan);
+    divHeader.innerHTML += "                  ";
+    divHeader.appendChild(nameSpan);
+    /* --------------------------------- */
+
+    var chatEntryDiv = document.createElement("div");
+    chatEntryDiv.className = "message other-message float-right";
+    chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
     li.appendChild(divHeader);
     li.appendChild(chatEntryDiv);
