@@ -115,10 +115,12 @@ function socketConnect() {
 
     id("chat_send").addEventListener("click", () => {
         sendMessage(id("chat_input").value);
+        id("chat_input").value = "";
     });
 
     id("chat_input").addEventListener("keypress", (e) => {
         if (e.keyCode === 13) sendMessage(e.target.value);
+        id("chat_input").value = "";
     });
 }
 
@@ -127,7 +129,6 @@ function sendMessage(message) {
         ws.send(JSON.stringify(
             {sender: username, recipient: receiver, message: message}
         ));
-        id("chat_input").value = "";
     }
 }
 
@@ -185,14 +186,14 @@ function insertMessage(name, message) {
     timeSpan.className = "message-data-time";
     timeSpan.innerHTML = message.time + "                  ";
     var nameSpan = document.createElement("span");
-    nameSpan.innerHTML = name;
+    nameSpan.innerHTML = name === "" || name === username ? username : name;
     /* --------------------------------- */
 
     var chatEntryDiv = document.createElement("div");
     chatEntryDiv.className = "message my-message";
     chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
-    if (name === username) {
+    if (name === username || name === "") {
     	li.className = "clear";
     	divHeader.className = "message-data align-right";
     	chatEntryDiv.className = "message other-message float-right";
@@ -236,7 +237,7 @@ function populateChatHistory() {
     if (chatHistory.hasOwnProperty(receiver)) {
         // Chat history exists
         chatHistory[receiver].forEach(message => {
-            insertMessage(message.sender, message.message);
+            insertMessage(message.sender, message);
         });
     } else {
         chatHistory[receiver] = [];
@@ -273,11 +274,10 @@ function isHidden(el) {
 }
 
 function search() {
-    var input, filter, ul, li;
-    input = id('search_user');
-    filter = input.value.toUpperCase();
-    ul = id('all_users_list');
-    li = ul.getElementsByTagName('li');
+    var input = id('search_user');
+    var filter = input.value.toUpperCase();
+    var ul = id('all_users_list');
+    var li = ul.getElementsByTagName('li');
 
     for (var a of li) {
         console.log("Item in list: " + a.children[0].innerHTML);
