@@ -4,6 +4,14 @@ var receiver; // The user to receive messages
 var ws; // Websocket
 var chatHistory = {};
 
+function getNotificationPermissions() {
+	if (Notification.permission != "granted") {
+		Notification.requestPermission().then(permission => {
+			console.log("Notification access granted.");
+		});
+	}
+}
+
 // HTTP Requests
 // Login function + start websocket
 function login() {
@@ -181,8 +189,15 @@ function updateScreen(data) {
             chatHistory[receiver].push(
                 {sender: data.sender === username ? "" : data.sender, message: data.message, time : data.time}
             );
+        } else {
+        	spawnNotification("New Message!", "New message from " + data.sender);
         }
     }
+}
+
+function spawnNotification(title, body) {
+	var options = {body: body};
+	var n = new Notification(title, options);
 }
 
 function insertMessage(name, message) {
@@ -301,3 +316,5 @@ function search() {
 function scrollToBottom() {
 	cls("chat_history").scrollTop = cls("chat_history").scrollHeight;
 }
+
+getNotificationPermissions();
