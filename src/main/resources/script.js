@@ -119,8 +119,11 @@ function socketConnect() {
     });
 
     id("chat_input").addEventListener("keypress", (e) => {
-        if (e.keyCode === 13) sendMessage(e.target.value);
-        id("chat_input").value = "";
+        if (e.keyCode === 13) {
+            sendMessage(e.target.value);
+            id("chat_input").value = "";
+            e.preventDefault();
+        }
     });
 }
 
