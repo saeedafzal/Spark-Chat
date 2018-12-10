@@ -7,20 +7,23 @@
     </head>
     <body>
         <!-- LOGIN SCREEN -->
-        <div id="login_screen" class="login_screen">
+        <div id="login_screen" class="start_screen">
             <h1>Login</h1>
             <input id="username_input" class="field_input" type="text" placeholder="Username...">
             <input id="password_input" class="field_input" type="password" placeholder="Password...">
+            <div id="login_log" class="log"></div>
             <button onclick="login()">Login</button>
             <br/>
             <button onclick="displayCreateAccount()">Create Account</button>
         </div>
 
         <!-- CREATE ACCOUNT SCREEN -->
-        <div id="create_screen">
+        <div id="create_screen" class="start_screen">
+        	<h1>Create Account</h1>
             <input id="username_create" type="text" placeholder="Username...">
             <input id="password_create" type="password" placeholder="Password...">
             <input id="conf_pass_create" type="password" placeholder="Confirm Password...">
+            <div id="create_log"></div>
             <button onclick="createAccount()">Create Account</button>
             <button onclick="backToLogin()">Back To Login</button>
         </div>
@@ -70,7 +73,7 @@
         </div>
 
         <!-- VISUAL LOGGING -->
-        <div id="logger"></div>
+        <!-- <div id="logger"></div> -->
 
         <script src="script.js"></script>
     </body>

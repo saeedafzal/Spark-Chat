@@ -1,18 +1,18 @@
 var username; // The current user's username.
 var receiver; // The user to receive messages
-var logger = id("logger"); // The DOM element where everything is logged.
+// var logger = id("logger"); // The DOM element where everything is logged.
 var ws; // Websocket
 var chatHistory = {};
 
 // HTTP Requests
 // Login function + start websocket
 function login() {
-    logger.innerHTML = "Login attempt...<br>";
+    id("login_log").innerHTML = "Login attempt...";
     username = id("username_input").value;
     var password = id("password_input").value;
 
     if (username === "" || password === "") {
-        logger.innerHTML += "Enter all fields.<br>";
+        id("login_log").innerHTML = "Enter all fields.";
         return;
     }
 
@@ -25,13 +25,16 @@ function login() {
             console.log("Received data: " + data);
 
             if (data.key) {
-                logger.innerHTML += data.message + "<br>";
+            	id("login_log").innerHTML = data.message;
                 id("login_screen").style.display = "none";
                 id("contact_screen").style.display = "block";
+            	id("login_log").innerHTML = "";
                 socketConnect();
-            } else logger.innerHTML += data.message + "<br>";
+            } else {
+                id("login_log").innerHTML = data.message;
+            }
         } else if (xhr.status !== 200) {
-            logger.innerHTML += "Error: " + xhr.status + " code. Please check server.<br>"
+            id("login_log").innerHTML = "Error: " + xhr.status + " code. Please check server.";
         }
     };
     var account = JSON.stringify({username: username, password: password});
@@ -45,11 +48,11 @@ function createAccount() {
     var conf_pass_create = id("conf_pass_create").value;
 
     if (username_create === "" || password_create === "" || conf_pass_create === "") {
-        logger.innerHTML += "Enter all fields.<br>";
+        id("create_log").innerHTML = "Enter all fields.";
         return;
     }
     if (password_create !== conf_pass_create) {
-        logger.innerHTML += "Passwords do not match.<br>";
+        id("create_log").innerHTML = "Passwords do not match.";
         return;
     }
 
@@ -62,10 +65,13 @@ function createAccount() {
             console.log("Received data.");
 
             if (data.key) {
-                logger.innerHTML += data.message + "<br>";
                 id("create_screen").style.display = "none";
                 id("login_screen").style.display = "block";
-            } else logger.innerHTML += data.message + "<br>";
+            } else {
+            	id("create_log").innerHTML = data.message;
+            }
+        } else {
+        	id("create_log").innerHTML = "Error: " + xhr.status + " code. Please check server.";
         }
     };
     var account = JSON.stringify({username: username_create, password: password_create});
@@ -83,15 +89,16 @@ function logout() {
             console.log("Received data.");
 
             if (data.key) {
-                logger.innerHTML += data.message + "<br>";
                 for (var i = 0; i < document.getElementsByTagName("body")[0].children.length; i++) {
                     document.getElementsByTagName("body")[0].children[i].style.display = "none";
                 }
 
                 ws.close();
 
+                id("login_log").innerHTML = "";
+            	id("create_log").innerHTML = "";
                 id("login_screen").style.display = "block";
-            } else logger.innerHTML += data.message + "<br>";
+            }
         }
     };
 
@@ -104,13 +111,12 @@ function socketConnect() {
 
     ws.onmessage = function (msg) {
         var data = JSON.parse(msg.data);
-        logger.innerHTML += "Received message: [" + data.key + "]<br>";
         console.log(data);
         updateScreen(data);
     };
 
     ws.onclose = function () {
-        logger.innerHTML += "Connection closed.<br>";
+        console.log("Connection closed.");
     };
 
     id("chat_send").addEventListener("click", () => {
@@ -223,12 +229,11 @@ function startChat(element) {
         id("chat_history").innerHTML = "";
         receiver = element.children[0].innerHTML;
         console.log(receiver);
-        logger.innerHTML += "Start chat with [" + receiver + "]<br>";
+        console.log("Start chat with " + receiver);
 
         id("chat_title").innerHTML = receiver;
         id("contact_screen").style.display = "none";
         id("chat_screen").style.display = "block";
-        id("logger").style.display = "none";
 
         populateChatHistory();
         
@@ -249,11 +254,15 @@ function populateChatHistory() {
 
 // Switch screens functions
 function displayCreateAccount() {
+	id("login_log").innerHTML = "";
+	id("create_log").innerHTML = "";
     id("login_screen").style.display = "none";
     id("create_screen").style.display = "block";
 }
 
 function backToLogin() {
+	id("login_log").innerHTML = "";
+	id("create_log").innerHTML = "";
     id("create_screen").style.display = "none";
     id("login_screen").style.display = "block";
 }

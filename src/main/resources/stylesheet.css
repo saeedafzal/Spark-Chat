@@ -10,25 +10,28 @@ body {
     height: 250px;
     width: 500px;
     position: fixed;
-    left: 65%;
-    top: 60%;
+    left: 70%;
+    top: 68%;
 }
 
 /* -------------------------------- */
-/* Login Screen */
-.login_screen {
+/* Login Screen & Create Account Screen */
+.start_screen {
+	position: absolute;
+	left: 37.5%;
+	top: 10%;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background: rgba(0, 0, 0, 0.1);
     width: 25%;
 }
 
-.login_screen h1 {
+.start_screen h1 {
     padding-bottom: 30px;
     padding-top: 30px;
 }
 
-.login_screen input {
+.start_screen input {
     outline: none;
     background: none;
     padding: 12px 20px;
@@ -39,11 +42,17 @@ body {
     color: black;
 }
 
-#password_input {
+/* #password_input {
     margin-bottom: 50px;
+} */
+
+.log {
+	height: 8px;
+	padding: 5px;
+	margin: 5px;
 }
 
-#login_screen button {
+.start_screen button {
     padding: 0;
     margin-bottom: 20px;
     background: #5BB6FD;
@@ -57,10 +66,14 @@ body {
     -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#00abeb), to(#fff), color-stop(0.5, #fff), color-stop(0.5, #00abeb)) 21 30 30 21 repeat repeat;
 }
 
-#login_screen button:hover {
+.start_screen button:hover {
     background: #fff;
     color: #5BB6FD;
     border: 1px #4CABFB solid;
+}
+
+#conf_pass_create {
+	margin-bottom: 40px;
 }
 /* -------------------------------- */
 /* Contact Screen */
@@ -142,7 +155,7 @@ body {
 
 #contact_name_list:hover {
     background-color: rgba(0, 117, 113, 0.4);
-    transition: background-color 500ms linear;
+    transition: background-color 100ms linear;
 }
 /* -------------------------------- */
 /* Main Chat Screen */
