@@ -197,7 +197,7 @@ function insertMessage(name, message) {
     chatEntryDiv.innerHTML = "              " + message.message + "            ";
 
     if (name === username || name === "") {
-    	li.className = "clear";
+    	li.className = " clear";
     	divHeader.className = "message-data align-right";
     	chatEntryDiv.className = "message other-message float-right";
     	
