@@ -37,6 +37,7 @@ function login() {
                 id("login_screen").style.display = "none";
                 id("contact_screen").style.display = "block";
             	id("login_log").innerHTML = "";
+            	document.title = "Contacts";
                 socketConnect();
             } else {
                 id("login_log").innerHTML = data.message;
@@ -75,6 +76,7 @@ function createAccount() {
             if (data.key) {
                 id("create_screen").style.display = "none";
                 id("login_screen").style.display = "block";
+                document.title = "Login";
             } else {
             	id("create_log").innerHTML = data.message;
             }
@@ -106,6 +108,7 @@ function logout() {
                 id("login_log").innerHTML = "";
             	id("create_log").innerHTML = "";
                 id("login_screen").style.display = "block";
+                document.title = "Login";
             }
         }
     };
@@ -171,8 +174,14 @@ function updateScreen(data) {
             statusDiv.innerHTML = data.value[i].status;
             if (statusDiv.innerHTML === "ONLINE") {
                 statusDiv.style.color = "green";
-            } else statusDiv.style.color = "red";
-
+                nameDiv.innerHTML += "                                            " + 
+                "<img src=\"images/online.png\" height=\"10\" width=\"10\"/>";
+            } else {
+            	statusDiv.style.color = "red";
+            	nameDiv.innerHTML += "                                            " + 
+            	"<img src=\"images/offline.png\" height=\"10\" width=\"10\"/>";
+            }
+            
             li.appendChild(nameDiv);
             li.appendChild(statusDiv);
 
@@ -242,10 +251,10 @@ function insertMessage(name, message) {
 function startChat(element) {
      if (element.children[1].innerHTML === "ONLINE") {
         id("chat_history").innerHTML = "";
-        receiver = element.children[0].innerHTML;
-        console.log(receiver);
+        receiver = element.children[0].textContent.split(" ").join("");
         console.log("Start chat with " + receiver);
 
+        document.title = receiver;
         id("chat_title").innerHTML = receiver;
         id("contact_screen").style.display = "none";
         id("chat_screen").style.display = "block";
@@ -273,6 +282,7 @@ function displayCreateAccount() {
 	id("create_log").innerHTML = "";
     id("login_screen").style.display = "none";
     id("create_screen").style.display = "block";
+    document.title = "Create New Account";
 }
 
 function backToLogin() {
@@ -280,11 +290,13 @@ function backToLogin() {
 	id("create_log").innerHTML = "";
     id("create_screen").style.display = "none";
     id("login_screen").style.display = "block";
+    document.title = "Login";
 }
 
 function backToContacts() {
     id("chat_screen").style.display = "none";
     id("contact_screen").style.display = "block";
+    document.title = "Contacts";
 }
 
 // Helper functions

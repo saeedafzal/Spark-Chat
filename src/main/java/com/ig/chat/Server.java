@@ -48,7 +48,9 @@ public class Server {
             final AccountEntry account = gson.fromJson(req.body(), AccountEntry.class);
             
             try {
-            	return gson.toJson(login.createAccount(account.getUsername(), account.getPassword()));
+            	final Response response = login.createAccount(account.getUsername(), account.getPassword());
+            	login.broadcastUserList();
+            	return gson.toJson(response);
             } catch (LoginException e) {
             	LOG.error("Failed to create account: {}", e.getMessage(), e);
             	return gson.toJson(new Response(false, e.getMessage()));

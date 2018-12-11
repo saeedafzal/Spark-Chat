@@ -27,7 +27,6 @@ import com.ig.chat.model.UserListJson;
 public class Handler {
 
     private static final Logger LOG = LoggerFactory.getLogger(Handler.class);
-    private Queue<Session> sessions = new ConcurrentLinkedQueue<>();
     private Map<String, Session> userSessions = new HashMap<>();
     private Gson gson = new GsonBuilder().create();
     private Login login = Login.getInstance();
@@ -38,10 +37,10 @@ public class Handler {
         // Set timeout to one day for each connected session
         session.setIdleTimeout(TimeUnit.DAYS.toMillis(1));
 
-        sessions.add(session);
+        login.getSessions().add(session);
         userSessions.put(login.getCurrentUserName(), session);
 
-        broadcastUserList();
+        login.broadcastUserList();
     }
 
     @OnWebSocketMessage
@@ -69,20 +68,9 @@ public class Handler {
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
         LOG.info("Connection closed:\n\tStatus Code: {}\n\tReason: {}", statusCode, reason);
-        sessions.remove(session);
+        login.getSessions().remove(session);
         userSessions.values().remove(session);
 
-        broadcastUserList();
-    }
-
-    // Broadcasts user list to all online users
-    private void broadcastUserList() {
-        sessions.stream().filter(Session::isOpen).forEach(session -> {
-            try {
-                session.getRemote().sendString(gson.toJson(new UserListJson("userlist", login.getUserList())));
-            } catch (IOException io) {
-                LOG.error("Failed to send broadcast, could not send to: {}", session.getLocalAddress());
-            }
-        });
+        login.broadcastUserList();
     }
 }

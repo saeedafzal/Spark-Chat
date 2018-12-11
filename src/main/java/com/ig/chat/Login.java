@@ -1,15 +1,23 @@
 package com.ig.chat;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.eclipse.jetty.websocket.api.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ig.chat.model.Account;
 import com.ig.chat.model.AccountEntry;
 import com.ig.chat.model.LoginException;
 import com.ig.chat.model.Response;
 import com.ig.chat.model.Status;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.ig.chat.model.UserListJson;
 
 class Login {
 
@@ -18,6 +26,8 @@ class Login {
     private List<Account> onlineUsers = new ArrayList<>();
     private List<Account> userList = new ArrayList<>();
     private String currentUserName;
+    private Queue<Session> sessions = new ConcurrentLinkedQueue<>();
+    private Gson gson = new GsonBuilder().create();
 
     static Login getInstance() {
         if (login_instance == null) login_instance = new Login();
@@ -111,5 +121,20 @@ class Login {
     
     void setCurrentUserName(String name) {
     	currentUserName = name;
+    }
+    
+    Queue<Session> getSessions() {
+    	return sessions;
+    }
+    
+ // Broadcasts user list to all online users
+    void broadcastUserList() {
+        sessions.stream().filter(Session::isOpen).forEach(session -> {
+            try {
+                session.getRemote().sendString(gson.toJson(new UserListJson("userlist", userList)));
+            } catch (IOException io) {
+                LOG.error("Failed to send broadcast, could not send to: {}", session.getLocalAddress());
+            }
+        });
     }
 }
