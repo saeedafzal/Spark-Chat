@@ -1,0 +1,300 @@
+body {
+    background: url("images/light.jpg");
+    font: 14px/20px "Lato", Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+#logger {
+    border: 1px solid black;
+    height: 250px;
+    width: 500px;
+    position: fixed;
+    left: 70%;
+    top: 68%;
+}
+
+/* -------------------------------- */
+/* Login Screen & Create Account Screen */
+.start_screen {
+	position: absolute;
+	left: 37.5%;
+	top: 10%;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.start_screen h1 {
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.start_screen input {
+    outline: none;
+    background: none;
+    padding: 12px 20px;
+    margin: 8px;
+    border: 2px solid white;
+    border-radius: 4px;
+    width: 50%;
+    color: black;
+}
+
+/* #password_input {
+    margin-bottom: 50px;
+} */
+
+.log {
+	height: 8px;
+	padding: 5px;
+	margin: 5px;
+}
+
+.start_screen button {
+    padding: 0;
+    margin-bottom: 20px;
+    background: #5BB6FD;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+    width: 40%;
+    height: 38px;
+    font-size: 20px;
+    -webkit-border-image: -webkit-gradient(linear, left top, left bottom, from(#00abeb), to(#fff), color-stop(0.5, #fff), color-stop(0.5, #00abeb)) 21 30 30 21 repeat repeat;
+}
+
+.start_screen button:hover {
+    background: #fff;
+    color: #5BB6FD;
+    border: 1px #4CABFB solid;
+}
+
+#conf_pass_create {
+	margin-bottom: 40px;
+}
+/* -------------------------------- */
+/* Contact Screen */
+.top_bar {
+    height: 5vh;
+    margin-bottom: 20px;
+    background: rgba(0, 117, 113, 0.4);
+}
+
+.top_bar button {
+    color: #4f7492;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #F2F5F8;
+    width: 100px;
+    padding: 5px;
+    position: absolute;
+    left: 90%;
+    top: 1%;
+}
+
+.contacts_header {
+    padding: 40px;
+    font-size: 30px;
+}
+
+.contact_con {
+    padding-left: 40px;
+}
+
+.contact_con input {
+    border-radius: 15px;
+    height: 30px;
+    width: 250px;
+    text-align: center;
+}
+
+.contact_con input:focus {
+    outline: none;
+}
+
+.contact_list_header {
+    background-color: rgba(94, 115, 114, 0.4);
+    height: 40px;
+    width: 500px;
+    margin-top: 30px;
+}
+
+.contact_list_header div {
+    float: left;
+    padding: 10px;
+}
+
+#header_name {
+    width: 300px;
+}
+
+.contact_user_list {
+    list-style: none;
+    margin: 10px auto auto;
+    padding: 0;
+}
+
+.contact_user_list li {
+    width: 500px;
+}
+
+.contact_user_list li div {
+    float: left;
+    padding: 10px;
+}
+
+#contact_name_list {
+    width: 300px;
+}
+
+#contact_name_list:hover {
+    background-color: rgba(0, 117, 113, 0.4);
+    transition: background-color 100ms linear;
+}
+/* -------------------------------- */
+/* Main Chat Screen */
+.clear:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.chat_container {
+    margin: 0 auto;
+    width: 750px;
+    border-radius: 5px;
+}
+
+.main_chat_box {
+    width: 750px;
+    float: left;
+    background: #F2F5F8;
+    border-radius: 15px;
+    color: #434651;
+}
+
+.chat_header {
+    padding: 20px;
+    border-bottom: 2px solid white;
+}
+
+.chat_header_con {
+    float: left;
+    padding-left: 10px;
+    margin-top: 6px;
+}
+
+#chat_title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.chat_history {
+    padding: 30px 30px 20px;
+    border-bottom: 2px solid white;
+    overflow-y: scroll;
+    height: 500px;
+}
+
+.chat_input {
+    padding: 30px;
+}
+
+#chat_input {
+    width: 94%;
+    border: none;
+    padding: 10px 20px;
+    font: 14px/22px "Lato", Arial, sans-serif;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    resize: none;
+}
+
+.chat_button {
+	float: right;
+    color: #94C2ED;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #F2F5F8;
+}
+
+#chat_history {
+    list-style: none;
+}
+
+.message-data {
+    margin-bottom: 15px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.message-data-time {
+    color: #a8aab1;
+    padding-left: 6px;
+}
+
+.other-message {
+    background: #94C2ED;
+}
+
+.message {
+    color: white;
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 7px;
+    margin-bottom: 30px;
+    width: 90%;
+    position: relative;
+}
+
+.message:after {
+    bottom: 100%;
+    left: 7%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border: 10px solid transparent;
+    border-bottom-color: #86BB71;
+    margin-left: -10px;
+}
+
+.other-message:after {
+    border-bottom-color: #94C2ED;
+    left: 93%;
+}
+
+.float-right {
+    float: right;
+}
+
+.my-message {
+	background: #86BB71;
+}
+/* -------------------------------- */
+#create_screen {
+    display: none;
+}
+
+#contact_screen {
+    display: none;
+}
+
+#chat_screen {
+    display: none;
+}
