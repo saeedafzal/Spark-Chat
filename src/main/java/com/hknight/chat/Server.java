@@ -7,12 +7,17 @@ import static spark.Spark.staticFileLocation;
 import static spark.Spark.webSocket;
 
 public class Server {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(Server.class);
-    
+
     public static void main(String[] args) {
-        LOG.info("----------------------------");
+        LOG.info("-------------------------");
+        LOG.info("-- Starting Spark Chat --");
+        LOG.info("-------------------------");
+
         staticFileLocation("/site");
         webSocket("/chat", Handler.class);
+
+        LOG.info("Server started successfully.");
     }
 }
