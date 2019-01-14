@@ -6,3 +6,11 @@
     left: 60%;
     top: 70%;
 }
+
+#contacts {
+    display: none;
+}
+
+#chat {
+    display: none;
+}
