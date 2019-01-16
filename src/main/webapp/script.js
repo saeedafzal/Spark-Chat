@@ -15,6 +15,7 @@ function init() {
     websocket.onmessage = function(msg) {
         console.log("Received message: " + msg.data);
         id("chat_history").innerHTML += msg.data + "\n";
+        scrollToBottom();
     }
     
     websocket.onclose = function() {
@@ -30,6 +31,10 @@ function sendMessage() {
 
 function id(id) {
     return document.getElementById(id);
+}
+
+function scrollToBottom() {
+    id("chat_history").scrollTop = id("chat_history").scrollHeight;
 }
 
 init();
