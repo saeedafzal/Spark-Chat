@@ -1,7 +1,6 @@
 package com.hknight.chat;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -12,32 +11,31 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import com.hknight.chat.messaging.Message;
-import com.hknight.chat.messaging.MessageDecoder;
-import com.hknight.chat.messaging.MessageEncoder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ServerEndpoint(value = "/chat", encoders = MessageEncoder.class, decoders = MessageDecoder.class)
+@ServerEndpoint(value = "/chat")
 public class Server {
 
     private static final Logger LOG = LoggerFactory.getLogger(Server.class);
-    private final Queue<Session> sessions = new ConcurrentLinkedQueue<>();
+    private static final Queue<Session> sessions = new ConcurrentLinkedQueue<>();
 
     @OnOpen
     public void onOpen(Session session) {
         LOG.info("{} joined server.", session.getId());
         sessions.add(session);
+        LOG.info("Current size of users in session list: {}", sessions.size());
+        sessions.forEach(e -> LOG.info(e.getId()));
     }
 
     @OnMessage
-    public void onMessage(Message message, Session session) {
+    public void onMessage(String message, Session session) {
+        LOG.info("Received message from {}: {}", session.getId(), message);
         // broadcast the message
         sessions.stream().filter(Session::isOpen).forEach(e -> {
             try {
-                e.getBasicRemote().sendObject(message);
-            } catch (IOException | EncodeException ex) {
+                e.getBasicRemote().sendText(session.getId() + ": " + message);
+            } catch (IOException ex) {
                 LOG.error("Failed to send broadcast.", ex);
             }
         });
@@ -50,14 +48,14 @@ public class Server {
         // notify peers about leaving the chat room
         sessions.stream().filter(Session::isOpen).forEach(e -> {
             try {
-                Message message = new Message();
-                message.setSender("Server");
-                message.setContent((String) session.getUserProperties().get("user") + " left the chat room.");
-                message.setReceived(new Date());
-                e.getBasicRemote().sendObject(message);
-            } catch (IOException | EncodeException ex) {
+                String message = "Server: " + (String) session.getUserProperties().get("user") + " disconnected.";
+                e.getBasicRemote().sendText(message);
+            } catch (IOException ex) {
                 LOG.error("Failed to send broadcast.", ex);
             }
         });
+        
+        LOG.info("Current size of users in session list: {}", sessions.size());
+        sessions.forEach(e -> LOG.info(e.getId()));
     }
 }
