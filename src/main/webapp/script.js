@@ -5,7 +5,7 @@ function init() {
         if (e.keyCode == 13) sendMessage();
     });
     
-    websocket = new WebSocket("ws://" + location.host + location.pathname + "chat");
+    websocket = new WebSocket("wss://" + location.host + location.pathname + "chat");
     
     websocket.onopen = function() {
         console.log("Websocket connection established.");
