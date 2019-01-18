@@ -5,11 +5,20 @@
         <title>Spark Chat</title>
     </head>
     <body>
-        <input id="input" type="text" placeholder="Enter message..." />
-        <button onclick="sendMessage()">Send</button>
-        <br />
+        <!-- LOGIN SCREEN -->
+        <div id="login_screen">
+            <input id="login_username" type="text" placeholder="Enter username..." />
+            <input id="login_password" type="password" placeholder="Enter password..." />
+            <button onclick="login()">LOGIN</button>
+            <div id="login_result"></div>
+        </div>
         
-        <textarea id="chat_history" readonly="true" rows="10" cols="50"></textarea>
+        <div id="chat_screen">
+            <input id="input" type="text" placeholder="Enter message..." />
+            <button onclick="sendMessage()">Send</button>
+            <br />
+            <textarea id="chat_history" readonly="true" rows="10" cols="50"></textarea>
+        </div>        
         
         <script src="script.js"></script>
     </body>
