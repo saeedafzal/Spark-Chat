@@ -3,7 +3,7 @@
 	<appender name="ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<append>true</append>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>../logs/SparkChat.%d.log</fileNamePattern>
+			<fileNamePattern>/logs/SparkChat.%d.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -13,7 +13,7 @@
 	<appender name="AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<append>true</append>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>../audit/Audit.%d.log</fileNamePattern>
+			<fileNamePattern>/audit/Audit.%d.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>

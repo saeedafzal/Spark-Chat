@@ -22,6 +22,9 @@ public class Server {
 
     @OnOpen
     public void onOpen(Session session) {
+    	// Set websocket timeout
+    	session.setMaxIdleTimeout(0);
+    	
         LOG.info("{} joined server.", session.getId());
         sessions.add(session);
         LOG.info("Current size of users in session list: {}", sessions.size());
