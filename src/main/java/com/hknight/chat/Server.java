@@ -22,6 +22,9 @@ public class Server {
 
     @OnOpen
     public void onOpen(Session session) {
+        // Set websocket timeout
+        session.setMaxIdleTimeout(0);
+
         LOG.info("{} joined server.", session.getId());
         sessions.add(session);
         LOG.info("Current size of users in session list: {}", sessions.size());
@@ -30,15 +33,17 @@ public class Server {
 
     @OnMessage
     public void onMessage(String message, Session session) {
-        LOG.info("Received message from {}: {}", session.getId(), message);
-        // broadcast the message
-        sessions.stream().filter(Session::isOpen).forEach(e -> {
-            try {
-                e.getBasicRemote().sendText(session.getId() + ": " + message);
-            } catch (IOException ex) {
-                LOG.error("Failed to send broadcast.", ex);
-            }
-        });
+        if (!message.equals("Ping")) {
+            LOG.info("Received message from {}: {}", session.getId(), message);
+            // broadcast the message
+            sessions.stream().filter(Session::isOpen).forEach(e -> {
+                try {
+                    e.getBasicRemote().sendText(session.getId() + ": " + message);
+                } catch (IOException ex) {
+                    LOG.error("Failed to send broadcast.", ex);
+                }
+            });
+        }
     }
 
     @OnClose
@@ -54,7 +59,7 @@ public class Server {
                 LOG.error("Failed to send broadcast.", ex);
             }
         });
-        
+
         LOG.info("Current size of users in session list: {}", sessions.size());
         sessions.forEach(e -> LOG.info(e.getId()));
     }
